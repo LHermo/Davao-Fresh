@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Davao Fresh</title>
+</head>
+<style>
+    .card {
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+      max-width: 220px; 
+      max-height: 320px;
+      margin: auto;
+      text-align: center;
+      font-family: arial;
+      border-radius: 16px;
+      padding: 20px;
+    }
+    
+    .card-button {
+      border: none;
+      border-radius: 25px;
+      outline: 0;
+      padding: 12px;
+      color: white;
+      background-color: #000;
+      text-align: center;
+      cursor: pointer;
+      width: 100%;
+      font-size: 18px;
+    }
+    
+    .card button:hover {
+      opacity: 0.7;
+    }
+    
+    /* CARD */
+
+    /*TEXT STYLES*/
+    .product-header{
+        font-size: 20px;
+    }
+    .product-subheader {
+        color: gray;
+        font-size: 15px;
+    }
+
+    /*QUANTITY SELECTOR*/
+    .quantity-selector {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 200px;
+  height: 40px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin: auto;
+}
+
+.quantity-input {
+  width: 50%;
+  height: 100%;
+  text-align: center;
+  font-size: 16px;
+  border: none;
+}
+
+.minus-btn,
+.plus-btn {
+  width: 25%;
+  height: 100%;
+  font-size: 20px;
+  border: none;
+  cursor: pointer;
+}
+
+.minus-btn:hover,
+.plus-btn:hover {
+  background-color: #ccc;
+}
+
+.add-to-basket-btn {
+  width: 50%;
+  height: 100%;
+  font-size: 16px;
+  border: none;
+  background-color: #58A65C;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.add-to-basket-btn:hover {
+  background-color: #555;
+}
+
+    </style>
+<body>
+   
+    <h2 style="text-align:center">Product Card</h2>
+
+    <div class="card">
+      <div>
+        <p>
+          <span width=150px style="display:inline;">Text 1</span>
+          <span style="display:inline;">Text 2</span>
+        </p>
+      </div>
+        <div>
+            <img src="assets/French Beans.png" alt="Denim Jeans" style="width:100%">
+        </div>
+        <div>
+            <h1 class="product-header">French Beans</h1>
+            <p class="product-subheader"> Vegetables </p>
+        </div>
+        <div>
+            <p class="product-header">₱19.99</p>
+        </div>
+        <div class="quantity-selector">
+            <button class="minus-btn" type="button">-</button>
+            <input type="text" class="quantity-input" value="1">
+            <button class="plus-btn" type="button">+</button>
+            <button class="add-to-basket-btn" type="button" disabled>Add to Basket</button>
+          </div>
+        <!-- <p><button>Add to Cart</button></p> -->
+    </div>
+
+</body>
+</html>
