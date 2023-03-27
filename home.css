@@ -41,13 +41,11 @@ nav ul li {
 nav ul li a {
     color: black;
     text-decoration: none;
-    /*font-weight: 400;*/
 }
 
 nav ul li a:hover {
     color: #FECB01;
 }
-
 
 /* FOR BANANA */
 .wrapper:hover #slide {

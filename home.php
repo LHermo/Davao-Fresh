@@ -37,7 +37,7 @@
             </ul> -->
         </nav>
         <div class="main-content">
-            <div class="flex-child-element" style="padding-left: 10%; justify-content: center; ">
+            <div class="flex-child-element" style="padding-left: 10%; justify-content: center;">
                 <div style="padding-top: 120px;">
                     <h1> Make a fresh</h1>
                     <h1> food delivery</h1>
