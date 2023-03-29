@@ -30,12 +30,13 @@ button.spaced {
 
 .colored-button {
     border: none;
-    background: #FBFF54;
+    background: #FECB01;
     color: #1B1B1B;
 }
 
 .colored-button:hover {
-    background: #FECB01;
+    background: #FD9F13;
+    color: #fff;
 }
 
 .bordered-button {
