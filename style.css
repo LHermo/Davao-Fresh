@@ -1,17 +1,15 @@
 /* General Styles */
-body {
-    /* padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-    background-size: cover;
-    background-position: center; */
 
+/* Content Styles */
+body {
     font-family: 'Montserrat', sans-serif;
     font-weight: 400;
     color: #1b1b1b;
+
+    /* Pang compensate ra sa fixing sa navbar */
+    margin: 150px 0 0 0;
 }
 
-/*  buttons */
 button {
     padding-top: 15px;
     padding-bottom: 15px;
@@ -68,6 +66,9 @@ nav {
     align-items: center;
     padding: 2% 10%;
     justify-content: space-between;
+
+    z-index: 2;
+    /* para mas taas siya kesa sa saging. Lagot man gud ning saging ba. */
 }
 
 nav ul li {
@@ -98,32 +99,50 @@ nav ul li a:hover {
     fill: #FECB01;
 }
 
-/* Main Content Styles */
+/* Footer Styles */
+footer {
+    padding: 4px 0px;
+
+    white-space: nowrap;
+    background: #e2fc51;
+    text-align: center;
+
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+footer p {
+    display: inline-block;
+    font-size: 0.65rem;
+    color: #1b1b1b;
+}
+
+footer a {
+    text-decoration: underline;
+}
+
+/* =================================================== */
+
+
+
+/* 1. HOMEPAGE */
+
+/* Main Content */
 body {
     /* Pang compensate ra sa fixing sa navbar */
     margin: 150px 0 0 0;
 }
 
-.hero {
-    height: 100vh;
-    width: 100%;
+.home-paragraph {
+    padding-top: 50px;
+    padding-bottom: 40px;
+    line-height: auto;
 }
 
-.main-content {
-    padding-inline: 10%;
+.paragraph p {
     margin: 0;
-    box-sizing: border-box;
-    background-size: cover;
-    background-position: center;
-
-    height: 76.51fvh;
-}
-
-/* Left Panel styles */
-.panel {
-    flex: 1;
-    justify-content: center;
-    border-color: 2px aqua;
+    font-size: 1.1rem;
 }
 
 .title {
@@ -137,39 +156,84 @@ body {
     color: #4A6C1C;
 }
 
-.hero-paragraph {
+.title p {
     padding-top: 50px;
     padding-bottom: 40px;
     line-height: auto;
 }
 
+.hero {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 0;
 
-
-/* Footer Styles */
-footer {
-    max-width: 100%;
-    padding: 4px;
-
-    white-space: nowrap;
-    background: #E2FC51;
-    text-align: center;
+    height: 100vh;
+    width: 100%;
+    background-image: url(assets/home-bg.png);
+    background-size: cover;
 }
 
-footer p {
-    display: inline-block;
-    font-size: 0.65rem;
-    color: #1b1b1b;
+.panel {
+    flex: 1;
+    margin-top: 0;
+    margin-bottom: 0;
 }
 
-footer a {
-    text-decoration: underline;
+.panel.left {
+    order: 1;
+    padding-left: 10%;
 }
 
-/* background-color: #E2FC51;
-width: 100%;
-height: 2.5rem;
+.panel.right {
+    order: 2;
+    margin-right: 0;
+}
 
-padding: 15px;
-text-align: center;
-font-size: 10px;
-color: black; */
+@media (max-width: 768px) {
+    .hero {
+        flex-direction: column;
+    }
+
+    .panel {
+        margin: 0;
+    }
+}
+
+.banana {
+    z-index: 1;
+}
+
+.banana-bg {
+    position: absolute;
+    top: 1;
+    right: 0
+}
+
+/* Animation Styles */
+.wrapper:hover #slide {
+    transition: 1s;
+    right: 0;
+}
+
+.mySlides {
+    display: none;
+    float: right;
+}
+
+.w3-animate-right {
+    position: relative;
+    animation: animateright 0.8s
+}
+
+@keyframes animateright {
+    from {
+        right: -300px;
+        opacity: 0
+    }
+
+    to {
+        right: 0;
+        opacity: 1
+    }
+}

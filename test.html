@@ -8,6 +8,7 @@
 
     <link rel="stylesheet" href="style.css">
 
+    <link rel="icon" href="assets/icon.ico">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;700;900&display=swap" rel="stylesheet">
@@ -33,35 +34,35 @@
         </nav>
 
         <!-- THE CONTENT -->
-        <!-- left panel -->
         <div class="hero">
-            <div class="panel" style="background: lightblue;">
+            <div class="panel left">
                 <div class="title">
                     <h1>Make a fresh</h1>
                     <h1>food delivery</h1>
                 </div>
-                <div class="hero-paragraph">
-                    <p>Online shopping from a great selection at Davao Fresh Store. Pick your basket now and start
-                        shopping!
-                    </p>
+                <div class="home-paragraph">
+                    <p>Online shopping from a great selection at Davao Fresh Store. Pick
+                        your basket now and start
+                        shopping!</p>
                 </div>
                 <div>
-                    <span>
-                        <button class="colored-button spaced">Start Shopping</button>
-                        <button class="bordered-button"> Sign Up </button>
-                    </span>
+                    <button class="spaced colored-button"> Start Shopping</button>
+                    <button class="bordered-button"> Sign Up</button>
                 </div>
             </div>
-            <!-- right panel -->
-            <div class="panel" style="background: gray;">
+            <div class="panel right">
+                <div style="position: relative; clear: right;">
+                    <img class="wrapper mySlides w3-animate-right banana" src="assets/banana-only.png">
+                    <img class="banana-bg" src="assets/ellipse.png">
+                </div>
             </div>
         </div>
+
+        <!-- FOOTER -->
     </div>
-    <!-- FOOTER -->
-    <footer>
+    <footer class="footer navbar-fixed-bottom">
         <p>Developed by </p>
         <p><a href="https://www.facebook.com/libby.hermo" target="_blank">Libby Marowen D. Hermo</a></p>
-
         <p>and </p>
         <p><a href="https://www.facebook.com/cristine.albisocomajes.3" target="_blank">Ma. Cristine Joy
                 Comajes</a></p>
@@ -69,6 +70,7 @@
 </body>
 
 <script>
+    // Sa Navbar animations ni
     window.addEventListener('scroll', function () {
         var navbar = document.querySelector('nav');
         if (window.pageYOffset > 0) {
@@ -91,7 +93,21 @@
             document.querySelector("nav").style.transition = "all 0.3s ease-in-out";
         }
     }
-</script>
 
+    // Sa Banana Animations ni 
+    var myIndex = 0;
+    carousel();
+
+    function carousel() {
+        var i;
+        var x = document.getElementsByClassName("mySlides");
+        for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";
+        }
+        myIndex++;
+        if (myIndex > x.length) { myIndex = 1 }
+        x[myIndex - 1].style.display = "block";
+    }
+</script>
 
 </html>
