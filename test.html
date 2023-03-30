@@ -17,97 +17,35 @@
 </head>
 
 <body>
-    <div class="main-content">
-        <!-- NAVIGATION BAR -->
-        <nav class="nav">
-            <img class="logo" src="assets/LOGO - Davao Fresh.svg"></img>
-            <ul style="display: inline-block;">
-                <li class="active"><a href="home.php"> Home </a></li>
-                <li><a href="products"> Products </a></li>
-                <li><a href="about.php"> About Us</a></li>
-            </ul>
-            <ul>
-                <li><a href="basket.php"><img class="icon" src="assets/shopping-basket.svg" alt="Shopping Basket"></a>
-                </li>
-                <li><a href="login.php"><img class="icon" src="assets/user.svg" alt="Login"></a></li>
-            </ul>
-        </nav>
-
-        <!-- THE CONTENT -->
-        <div class="hero">
-            <div class="panel left">
-                <div class="title">
-                    <h1>Make a fresh</h1>
-                    <h1>food delivery</h1>
-                </div>
-                <div class="home-paragraph">
-                    <p>Online shopping from a great selection at Davao Fresh Store. Pick
-                        your basket now and start
-                        shopping!</p>
-                </div>
-                <div>
-                    <button class="spaced colored-button"> Start Shopping</button>
-                    <button class="bordered-button"> Sign Up</button>
-                </div>
-            </div>
-            <div class="panel right">
-                <div style="position: relative; clear: right;">
-                    <img class="wrapper mySlides w3-animate-right banana" src="assets/banana-only.png">
-                    <img class="banana-bg" src="assets/ellipse.png">
-                </div>
+    <div class="product-card">
+        <div class="price">Price</div>
+        <div class="product-image">Product Image</div>
+        <div class="category">Product Category</div>
+        <div class="product-name">Product Name</div>
+        <div class="quantity-selector">
+            <button>-</button>
+            <input type="number" min="1" value="1">
+            <button>+</button>
+        </div>
+        <div class="add-to-basket">
+            <button>Add to basket</button>
+        </div>
+    </div>
+    <center>
+        <div style="width: 220px; height: 340px; background: #fff; border-radius: 10px; border: 2px solid #B7B7B7;">
+            <div class="Price" style="text-align: left; padding: 23px;">Price</div>
+            <div>Image here</div>
+            <div>Product Category</div>
+            <div>Product Name</div>
+            <div class="quantity-selector">
+                <button class="minus-btn">-</button>
+                <input type="number" min="0" value="0">
+                <button class="plus-btn">+</button>
             </div>
         </div>
+    </center>
 
-        <!-- FOOTER -->
     </div>
-    <footer class="footer navbar-fixed-bottom">
-        <p>Developed by </p>
-        <p><a href="https://www.facebook.com/libby.hermo" target="_blank">Libby Marowen D. Hermo</a></p>
-        <p>and </p>
-        <p><a href="https://www.facebook.com/cristine.albisocomajes.3" target="_blank">Ma. Cristine Joy
-                Comajes</a></p>
-    </footer>
-</body>
 
-<script>
-    // Sa Navbar animations ni
-    window.addEventListener('scroll', function () {
-        var navbar = document.querySelector('nav');
-        if (window.pageYOffset > 0) {
-            navbar.classList.add('nav-shadow');
-        } else {
-            navbar.classList.remove('nav-shadow');
-        }
-    });
-
-    window.onscroll = function () { scrollFunction() };
-
-    function scrollFunction() {
-        if (document.body.scrollTop > 60 || document.documentElement.scrollTop > 60) {
-            document.querySelector("nav").style.padding = "1% 10%";
-            document.querySelector("nav").style.height = "50px";
-            document.querySelector("nav").style.transition = "all 0.3s ease-in-out";
-        } else {
-            document.querySelector("nav").style.padding = "2% 10%";
-            document.querySelector("nav").style.height = "60px";
-            document.querySelector("nav").style.transition = "all 0.3s ease-in-out";
-        }
-    }
-
-    // Sa Banana Animations ni 
-    var myIndex = 0;
-    carousel();
-
-    function carousel() {
-        var i;
-        var x = document.getElementsByClassName("mySlides");
-        for (i = 0; i < x.length; i++) {
-            x[i].style.display = "none";
-        }
-        myIndex++;
-        if (myIndex > x.length) { myIndex = 1 }
-        x[myIndex - 1].style.display = "block";
-    }
-</script>
 
 </html>

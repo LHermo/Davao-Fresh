@@ -24,7 +24,7 @@
             <ul style="display: inline-block;">
                 <li class="active"><a href="home.php"> Home </a></li>
                 <li><a href="products"> Products </a></li>
-                <li><a href="about.php"> About Us</a></li>
+                <li><a href="about.html"> About Us</a></li>
             </ul>
             <ul>
                 <li><a href="basket.php"><img class="icon" src="assets/shopping-basket.svg" alt="Shopping Basket"></a>
@@ -46,8 +46,8 @@
                         shopping!</p>
                 </div>
                 <div>
-                    <button class="spaced colored-button"> Start Shopping</button>
-                    <button class="bordered-button"> Sign Up</button>
+                    <button class="button-main spaced colored"> Start Shopping</button>
+                    <button class="button-main bordered"> Sign Up</button>
                 </div>
             </div>
             <div class="panel right">

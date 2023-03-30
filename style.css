@@ -10,7 +10,7 @@ body {
     margin: 150px 0 0 0;
 }
 
-button {
+.button-main {
     padding-top: 15px;
     padding-bottom: 15px;
     padding-left: 48px;
@@ -24,22 +24,22 @@ button {
     font-family: inherit;
 }
 
-button.spaced {
+.button-main.spaced {
     margin-right: 18px;
 }
 
-.colored-button {
+.button-main.colored {
     border: none;
     background: #FECB01;
     color: #1B1B1B;
 }
 
-.colored-button:hover {
+.button-main.colored:hover {
     background: #FD9F13;
     color: #fff;
 }
 
-.bordered-button {
+.button-main.bordered {
     border-style: solid;
     border-color: #1B1B1B;
     color: #1B1B1B;
@@ -47,9 +47,31 @@ button.spaced {
     border-width: 1px;
 }
 
-.bordered-button:hover {
+.button-main.bordered:hover {
     background: #1B1B1B;
     color: white;
+}
+
+.minus-btn,
+.plus-btn {
+    width: 23px;
+    height: 24px;
+    border: none;
+    border-radius: 5px;
+
+    background-color: #4A6C1C;
+    color: white;
+    font-size: 20px;
+}
+
+.minus-btn:hover,
+.plus-btn:hover {
+    background-color: #344E10;
+}
+
+.quantity-selector {
+    display: flex;
+    align-items: center;
 }
 
 /* Header Styles */
@@ -124,6 +146,66 @@ footer a {
 }
 
 /* =================================================== */
+
+
+/* PRODUCTS PAGE */
+.product-card {
+    width: 129px;
+    height: 346px;
+    border-radius: 10px;
+    border-color: blue;
+    /* other styles as needed */
+}
+
+.price {
+    text-align: left;
+    /* other styles as needed */
+}
+
+.product-image {
+    /* insert image here */
+    /* other styles as needed */
+}
+
+.category {
+    /* other styles as needed */
+}
+
+.product-name {
+    /* other styles as needed */
+}
+
+.quantity-selector {
+    /* other styles as needed */
+}
+
+.quantity-selector button {
+    /* other styles as needed */
+}
+
+.quantity-selector input[type="number"] {
+    /* other styles as needed */
+}
+
+.add-to-basket {
+    /* other styles as needed */
+}
+
+.add-to-basket button {
+    /* other styles as needed */
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
