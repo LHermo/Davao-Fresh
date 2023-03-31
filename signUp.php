@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="assets/icon.ico">
-    <link rel="stylesheet" href="signUp.css">
+    <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;700;900&display=swap" rel="stylesheet">
@@ -120,9 +120,5 @@
             </div>
         </div>
     </section>
-    <!-- FOOTER -->
-    <div class=" footer">
-            <p> Developed by Libby Marowen Hermo and Ma. Cristine Joy Comajes</p>
-        </div>
 </body>
 </html>

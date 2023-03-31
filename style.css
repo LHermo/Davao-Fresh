@@ -52,28 +52,6 @@ body {
     color: white;
 }
 
-.minus-btn,
-.plus-btn {
-    width: 23px;
-    height: 24px;
-    border: none;
-    border-radius: 5px;
-
-    background-color: #4A6C1C;
-    color: white;
-    font-size: 20px;
-}
-
-.minus-btn:hover,
-.plus-btn:hover {
-    background-color: #344E10;
-}
-
-.quantity-selector {
-    display: flex;
-    align-items: center;
-}
-
 /* Header Styles */
 nav {
     position: fixed;
@@ -148,67 +126,210 @@ footer a {
 /* =================================================== */
 
 
-/* PRODUCTS PAGE */
+
+
+/* ---------------------------------------------------------------- */
+/* 2. PRODUCTS PAGE */
+
+/* product card */
+.products-hero {
+    text-align: center;
+}
+
+.products-hero p {
+    word-break: break-all;
+}
+
+
+.products-hero h1 {
+    font-weight: 900;
+    font-size: 3.125rem;
+}
+
+.products-hero p {
+    font-size: 1.25rem;
+}
+
 .product-card {
-    width: 129px;
-    height: 346px;
+    width: 220px;
+    background: #fff;
     border-radius: 10px;
-    border-color: blue;
-    /* other styles as needed */
+    border: 2px solid #E3E3E3;
+    text-align: center;
+    display: inline-block;
+}
+
+.products-description {
+    margin-bottom: 51px;
+}
+
+.products-description h1 {
+    font-size: 1.1.688rem;
+    font-weight: 700;
+    text-align: center;
+}
+
+.products-description p {
+    font-size: 13px;
+    text-align: center;
+    color: #B7B7B7;
+
+}
+
+.product-card-content {
+    padding: 24px 24px;
 }
 
 .price {
     text-align: left;
-    /* other styles as needed */
+    margin-bottom: 17px;
+}
+
+.price .cost {
+    font-weight: 700;
+    font-size: 16px;
+}
+
+.price .description {
+    font-weight: 700;
+    font-size: 10px;
+    color: #B7B7B7;
 }
 
 .product-image {
-    /* insert image here */
-    /* other styles as needed */
+    height: 98px;
+    margin-bottom: 17px;
 }
 
-.category {
-    /* other styles as needed */
+.product-image img {
+    max-width: 100%;
+    max-height: 100%;
 }
 
-.product-name {
-    /* other styles as needed */
+.product-details {
+    font-weight: 700;
+    margin-bottom: 27px;
+    height: 39px;
 }
 
+.product-details p.category {
+    color: #b7b7b7;
+    font-size: 10px;
+    margin-bottom: 5px;
+}
+
+.product-details p.name {
+    color: #1b1b1b;
+    font-size: 16px;
+    margin-top: 0px;
+}
+
+/* Sa quantity selector na ni */
 .quantity-selector {
-    /* other styles as needed */
+    display: flex;
+    justify-content: center;
+    margin-bottom: 17px;
 }
 
-.quantity-selector button {
-    /* other styles as needed */
+.quantity-input {
+    width: 48px;
+    height: 20px;
+    border: none;
+    text-align: center;
+
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 16;
 }
 
-.quantity-selector input[type="number"] {
-    /* other styles as needed */
+.minus-btn,
+.plus-btn {
+    width: 23px;
+    height: 24px;
+    border: none;
+    border-radius: 5px;
+
+    background-color: #4A6C1C;
+    color: white;
+    font-size: 20px;
 }
 
-.add-to-basket {
-    /* other styles as needed */
+.minus-btn:hover,
+.plus-btn:hover {
+    background-color: #344E10;
+    cursor: pointer;
 }
 
-.add-to-basket button {
-    /* other styles as needed */
+.button-products {
+    background: #58A65C;
+    border: none;
+    border-radius: 44px;
+
+    color: white;
+    font-family: inherit;
+    font-size: 11px;
+    padding: 12px 47px;
+}
+
+.button-products:hover {
+    background-color: #4C8E4F;
+    cursor: pointer;
+}
+
+.button-products:active {
+    background-color: #386A3B;
+}
+
+.search-div {
+    margin-top: 51px;
+    margin-bottom: 148px;
+}
+
+.search-bar {
+    width: 723px;
+    align-items: center;
+    border-radius: 53px;
+    font-family: inherit;
+    font-size: 16px;
+    border: 2px solid #E3E3E3;
+
+    padding: 16px 28px;
+    margin: 0 auto;
+    display: block;
+}
+
+input {
+    background: url("assets/search-icon.svg") right no-repeat;
+    background-position: 733px 12px;
+}
+
+.categ {
+    margin: 45px 10%;
+    margin-top: 100px;
+}
+
+.categ .cat-name {
+    font-weight: 700;
+    font-size: 27px;
+    color: #1b1b1b;
+}
+
+.categ .desc {
+    font-weight: 500;
+    font-size: 13px;
+    color: #B7B7B7;
+    margin-top: 3px;
+}
+
+.cards-row {
+    display: flex;
+    justify-content: space-between;
+    margin-inline: 10%;
 }
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+/* ---------------------------------------------------------------- */
 /* 1. HOMEPAGE */
 
 /* Main Content */
@@ -318,5 +439,49 @@ body {
     to {
         right: 0;
         opacity: 1
+    }
+}
+
+
+
+/* -------------------------------------------------- */
+/* Sign Up */
+@media (min-width: 1025px) {
+    .h-custom {
+        height: 100vh !important;
+    }
+}
+
+* {
+    font-family: 'Montserrat', sans-serif;
+}
+
+.card-registration .select-input.form-control[readonly]:not([disabled]) {
+    font-size: 1rem;
+    line-height: 2.15;
+    padding-left: .75em;
+    padding-right: .75em;
+}
+
+.card-registration .select-arrow {
+    top: 13px;
+}
+
+.bg {
+    background-color: #406829;
+    /* background: url(assets/reut-GQ62pYNohW0-unsplash.jpg) */
+}
+
+@media (min-width: 992px) {
+    .card-registration-2 .bg {
+        border-top-right-radius: 15px;
+        border-bottom-right-radius: 15px;
+    }
+}
+
+@media (max-width: 991px) {
+    .card-registration-2 .bg {
+        border-bottom-left-radius: 15px;
+        border-bottom-right-radius: 15px;
     }
 }

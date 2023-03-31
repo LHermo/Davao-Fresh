@@ -1,3 +1,8 @@
+<?php
+// session_start();
+require_once('conn.php');
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -23,8 +28,8 @@
             <img class="logo" src="assets/LOGO - Davao Fresh.svg"></img>
             <ul style="display: inline-block;">
                 <li class="active"><a href="home.php"> Home </a></li>
-                <li><a href="products"> Products </a></li>
-                <li><a href="about.html"> About Us</a></li>
+                <li><a href="products.php"> Products </a></li>
+                <li><a href="about.php"> About Us</a></li>
             </ul>
             <ul>
                 <li><a href="basket.php"><img class="icon" src="assets/shopping-basket.svg" alt="Shopping Basket"></a>
@@ -57,9 +62,8 @@
                 </div>
             </div>
         </div>
-
-        <!-- FOOTER -->
     </div>
+    <!-- FOOTER -->
     <footer class="footer navbar-fixed-bottom">
         <p>Developed by </p>
         <p><a href="https://www.facebook.com/libby.hermo" target="_blank">Libby Marowen D. Hermo</a></p>
@@ -109,5 +113,8 @@
         x[myIndex - 1].style.display = "block";
     }
 </script>
-
 </html>
+
+<?php
+    $pdo = null;
+?>

@@ -18,34 +18,40 @@
 
 <body>
     <div class="product-card">
-        <div class="price">Price</div>
-        <div class="product-image">Product Image</div>
-        <div class="category">Product Category</div>
-        <div class="product-name">Product Name</div>
-        <div class="quantity-selector">
-            <button>-</button>
-            <input type="number" min="1" value="1">
-            <button>+</button>
-        </div>
-        <div class="add-to-basket">
-            <button>Add to basket</button>
-        </div>
-    </div>
-    <center>
-        <div style="width: 220px; height: 340px; background: #fff; border-radius: 10px; border: 2px solid #B7B7B7;">
-            <div class="Price" style="text-align: left; padding: 23px;">Price</div>
-            <div>Image here</div>
-            <div>Product Category</div>
-            <div>Product Name</div>
+        <div class="product-card-content">
+            <div class="price">
+                <span class="cost">₱ 10.00</span>
+                <span class="description">/ per piece</span>
+            </div>
+            <div class="product-image"><img src="assets/products/onion.png"></div>
+            <div class="product-details">
+                <p class="category">CATEGORY</p>
+                <p class="name">Product Name</p>
+            </div>
             <div class="quantity-selector">
                 <button class="minus-btn">-</button>
-                <input type="number" min="0" value="0">
+                <input class="quantity-input" type="text" min="0" value="0">
                 <button class="plus-btn">+</button>
             </div>
+            <button class="button-products">Add to basket</button>
         </div>
-    </center>
-
     </div>
+</body>
+<script>
+    // Sa quantity-selectors ni
+    var minusBtn = document.querySelector(".minus-btn");
+    var plusBtn = document.querySelector(".plus-btn");
+    var quantityInput = document.querySelector(".quantity-input");
 
+    minusBtn.addEventListener("click", function () {
+        if (quantityInput.value > 0) {
+            quantityInput.value--;
+        }
+    });
+
+    plusBtn.addEventListener("click", function () {
+        quantityInput.value++;
+    });
+</script>
 
 </html>
