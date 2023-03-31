@@ -140,34 +140,26 @@
         <li><a href="#">About</a></li>
         <li><a href="#">Services</a></li>
         <li><a href="#">Contact</a></li> -->
-        <li <?php if ($_SERVER['PHP_SELF']=='/home.php' ) { 
+        <li <?php if ($_SERVER['PHP_SELF']=='/adm_products.php' ) { 
             echo 'class="active"' ; } ?>>
-                <a href="home.php">Home</a>
+                <a href="adm_products.php">Products</a>
         </li>
-        <li <?php if ($_SERVER['PHP_SELF']=='/about.php' ) { 
+        <li <?php if ($_SERVER['PHP_SELF']=='/adm_customers.php' ) { 
             echo 'class="active"' ; } ?>>
-                <a href="products.php">Products</a>
+                <a href="adm_customers.php">Customers</a>
         </li>
-        <li <?php if ($_SERVER['PHP_SELF']=='/about.php' ) { 
+        <li <?php if ($_SERVER['PHP_SELF']=='/adm_orders.php' ) { 
             echo 'class="active"' ; } ?>>
-                <a href="services.php">About</a></li>
+                <a href="adm_orders.php">Orders</a></li>
+        <li <?php if ($_SERVER['PHP_SELF']=='/adm_reports.php' ) { 
+            echo 'class="active"' ; } ?>>
+                <a href="adm_reports.php">Reports</a></li>
     </ul>
     <div class="icons">
     <ul>
-        <li <?php if ($_SERVER['PHP_SELF']=='/about.php' ) { 
-                echo 'class="active"' ; } ?>>
-                    <a href="#"><img src="assets/shopping-basket.svg" alt="Icon 1"></a>
-        </li>
-        <li <?php if ($_SERVER['PHP_SELF']=='/about.php' ) { 
-                echo 'class="active"' ; } ?>>
-                    <a href="#"><img src="assets/person-icon.svg" alt="Icon 2"></a>
-        </li>
-        <!-- <a href="#"><img src="assets/search-icon.svg" alt="Icon 1"></a>
-        <a href="#"><img src="assets/person-icon.svg" alt="Icon 2"></a> -->
+        <li <?php if ($_SERVER['PHP_SELF']=='/login.php' ) { 
+            echo 'class="active"' ; } ?>>
+                <a href="login.php" style="color: #E85757;">Logout</a></li>
     </ul>
     </div>
 </nav>
-
-<div style="height: 1000px">
-    sample content
-</div>
