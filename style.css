@@ -131,25 +131,27 @@ footer a {
 /* ---------------------------------------------------------------- */
 /* 2. PRODUCTS PAGE */
 
-
-
-
 /* product card */
-.products-hero h1 {
-    font-weight: 900;
-    font-size: 3.125rem;
+.products-hero {
     text-align: center;
 }
 
 .products-hero p {
+    word-break: break-all;
+}
+
+
+.products-hero h1 {
+    font-weight: 900;
+    font-size: 3.125rem;
+}
+
+.products-hero p {
     font-size: 1.25rem;
-    text-align: center;
-    /* width: 580px; */
 }
 
 .product-card {
     width: 220px;
-    /* height: 340px; */
     background: #fff;
     border-radius: 10px;
     border: 2px solid #E3E3E3;
@@ -171,7 +173,7 @@ footer a {
     font-size: 13px;
     text-align: center;
     color: #B7B7B7;
-    /* width: 580px; */
+
 }
 
 .product-card-content {
@@ -278,9 +280,52 @@ footer a {
     background-color: #386A3B;
 }
 
+.search-div {
+    margin-top: 51px;
+    margin-bottom: 148px;
+}
 
+.search-bar {
+    width: 723px;
+    align-items: center;
+    border-radius: 53px;
+    font-family: inherit;
+    font-size: 16px;
+    border: 2px solid #E3E3E3;
 
+    padding: 16px 28px;
+    margin: 0 auto;
+    display: block;
+}
 
+input {
+    background: url("assets/search-icon.svg") right no-repeat;
+    background-position: 733px 12px;
+}
+
+.categ {
+    margin: 45px 10%;
+    margin-top: 100px;
+}
+
+.categ .cat-name {
+    font-weight: 700;
+    font-size: 27px;
+    color: #1b1b1b;
+}
+
+.categ .desc {
+    font-weight: 500;
+    font-size: 13px;
+    color: #B7B7B7;
+    margin-top: 3px;
+}
+
+.cards-row {
+    display: flex;
+    justify-content: space-between;
+    margin-inline: 10%;
+}
 
 
 
@@ -394,5 +439,49 @@ body {
     to {
         right: 0;
         opacity: 1
+    }
+}
+
+
+
+/* -------------------------------------------------- */
+/* Sign Up */
+@media (min-width: 1025px) {
+    .h-custom {
+        height: 100vh !important;
+    }
+}
+
+* {
+    font-family: 'Montserrat', sans-serif;
+}
+
+.card-registration .select-input.form-control[readonly]:not([disabled]) {
+    font-size: 1rem;
+    line-height: 2.15;
+    padding-left: .75em;
+    padding-right: .75em;
+}
+
+.card-registration .select-arrow {
+    top: 13px;
+}
+
+.bg {
+    background-color: #406829;
+    /* background: url(assets/reut-GQ62pYNohW0-unsplash.jpg) */
+}
+
+@media (min-width: 992px) {
+    .card-registration-2 .bg {
+        border-top-right-radius: 15px;
+        border-bottom-right-radius: 15px;
+    }
+}
+
+@media (max-width: 991px) {
+    .card-registration-2 .bg {
+        border-bottom-left-radius: 15px;
+        border-bottom-right-radius: 15px;
     }
 }

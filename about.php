@@ -11,7 +11,7 @@
         <img class="logo" src="assets/LOGO - Davao Fresh.svg"></img>
         <ul style="display: inline-block;">
             <li><a href="home.php"> Home </a></li>
-            <li><a href="products.html"> Products </a></li>
+            <li><a href="products.php"> Products </a></li>
             <li class="active"><a href="About.php"> About Us</a></li>
         </ul>
         <ul>

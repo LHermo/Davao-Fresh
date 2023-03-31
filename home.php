@@ -1,3 +1,8 @@
+<?php
+// session_start();
+require_once('conn.php');
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -23,7 +28,7 @@
             <img class="logo" src="assets/LOGO - Davao Fresh.svg"></img>
             <ul style="display: inline-block;">
                 <li class="active"><a href="home.php"> Home </a></li>
-                <li><a href="products.html"> Products </a></li>
+                <li><a href="products.php"> Products </a></li>
                 <li><a href="about.php"> About Us</a></li>
             </ul>
             <ul>
@@ -108,5 +113,8 @@
         x[myIndex - 1].style.display = "block";
     }
 </script>
-
 </html>
+
+<?php
+    $pdo = null;
+?>
