@@ -39,6 +39,10 @@ body {
     color: #fff;
 }
 
+.navbar-links .icon svg path:hover {
+    fill: #FECB01;
+}
+
 .button-main.bordered {
     border-style: solid;
     border-color: #1B1B1B;

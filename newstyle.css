@@ -1,0 +1,8 @@
+body {
+    /* pang compensate ra ni sa navbar */
+    margin-top: 117px;
+}
+
+body.with-margin {
+    margin-inline: 10%;
+}
