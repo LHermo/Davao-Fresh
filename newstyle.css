@@ -1,9 +1,40 @@
-body {
-    /* pang compensate ra ni sa navbar */
+/* body {
     margin-top: 117px;
     font-family: 'Montserrat', sans-serif;
 }
 
 body.with-margin {
     margin-inline: 10%;
+} */
+
+body {
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* pagination styles */
+.pagination .page-link {
+    background-color: #fff;
+    color: #58A65C;
+}
+
+.pagination .page-link:hover {
+    background-color: rgb(245, 245, 245);
+    color: #58A65C;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #58A65C;
+    border-color: #58A65C;
+    color: #fff;
+}
+
+.pagination a.page-link {
+    color: #58A65C;
+}
+
+
+.nav-pills .nav-link.active,
+.nav-pills .show>.nav-link {
+    color: #fff;
+    background-color: #295F3E;
 }
