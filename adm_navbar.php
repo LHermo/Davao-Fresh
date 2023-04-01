@@ -1,8 +1,4 @@
 <style>
-    body {
-        margin: 0;
-    }
-
     nav {
         position: fixed;
         top: 0;
@@ -32,17 +28,18 @@
         margin: 0;
         padding: 0;
     }
+
     li {
         margin: 0;
         padding: 1rem;
     }
 
     .icons li:first-child {
-    margin-right: -20px;
+        margin-right: -20px;
     }
 
     .icons li:last-child {
-    margin-left: -20px;
+        margin-left: -20px;
     }
 
     a {
@@ -82,7 +79,7 @@
 
             margin: 0;
             padding: 0;
-            text-align: center;   
+            text-align: center;
         }
 
         li {
@@ -95,13 +92,14 @@
             margin-top: 2rem;
         }
 
-        .icons li{
+        .icons li {
             padding-left: 2rem;
         }
 
         a {
             padding: 0.5rem;
         }
+
         .scrolled ul {
             margin-top: -28px;
         }
@@ -140,26 +138,26 @@
         <li><a href="#">About</a></li>
         <li><a href="#">Services</a></li>
         <li><a href="#">Contact</a></li> -->
-        <li <?php if ($_SERVER['PHP_SELF']=='/adm_products.php' ) { 
-            echo 'class="active"' ; } ?>>
-                <a href="adm_products.php">Products</a>
+        <li <?php if ($_SERVER['PHP_SELF']=='/adm_products.php' ) { echo 'class="active"' ; } ?>>
+            <a href="adm_products.php">Products</a>
         </li>
-        <li <?php if ($_SERVER['PHP_SELF']=='/adm_customers.php' ) { 
-            echo 'class="active"' ; } ?>>
-                <a href="adm_customers.php">Customers</a>
+        <li <?php if ($_SERVER['PHP_SELF']=='/adm_customers.php' ) { echo 'class="active"' ; } ?>>
+            <a href="adm_customers.php">Customers</a>
         </li>
-        <li <?php if ($_SERVER['PHP_SELF']=='/adm_orders.php' ) { 
-            echo 'class="active"' ; } ?>>
-                <a href="adm_orders.php">Orders</a></li>
-        <li <?php if ($_SERVER['PHP_SELF']=='/adm_reports.php' ) { 
-            echo 'class="active"' ; } ?>>
-                <a href="adm_reports.php">Reports</a></li>
+        <li <?php if ($_SERVER['PHP_SELF']=='/adm_orders.php' ) { echo 'class="active"' ; } ?>>
+            <a href="adm_orders.php">Orders</a>
+        </li>
+        <li <?php if ($_SERVER['PHP_SELF']=='/adm_reports.php' ) { echo 'class="active"' ; } ?>>
+            <a href="adm_reports.php">Reports</a>
+        </li>
     </ul>
     <div class="icons">
-    <ul>
-        <li <?php if ($_SERVER['PHP_SELF']=='/login.php' ) { 
-            echo 'class="active"' ; } ?>>
-                <a href="login.php" style="color: #E85757;">Logout</a></li>
-    </ul>
+        <ul>
+            <li <?php if ($_SERVER['PHP_SELF']=='/login.php' ) { echo 'class="active"' ; } ?>>
+                <a href="login.php" style="color: #E85757;">Logout</a>
+            </li>
+        </ul>
     </div>
 </nav>
+
+<div style="height: 1000px;"></div>
