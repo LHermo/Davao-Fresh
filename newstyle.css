@@ -1,6 +1,7 @@
 body {
     /* pang compensate ra ni sa navbar */
     margin-top: 117px;
+    font-family: 'Montserrat', sans-serif;
 }
 
 body.with-margin {
