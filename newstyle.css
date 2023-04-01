@@ -3,6 +3,6 @@ body {
     margin-top: 117px;
 }
 
-.my-table {
+body.with-margin {
     margin-inline: 10%;
 }
