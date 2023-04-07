@@ -11,6 +11,14 @@ body {
     font-family: 'Montserrat', sans-serif;
 }
 
+/* Search bar */
+
+/* sidebar styles */
+.change-when-hovered:hover {
+    background: #295F3E;
+    border-radius: 5px;
+}
+
 /* pagination styles */
 .pagination .page-link {
     background-color: #fff;
@@ -32,9 +40,69 @@ body {
     color: #58A65C;
 }
 
-
 .nav-pills .nav-link.active,
 .nav-pills .show>.nav-link {
     color: #fff;
+    background-color: #3c8859;
+}
+
+/* BUTTONS */
+.adm-table-button {
+    padding: 10px 20px;
+    background: #58A65C;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+.adm-table-button:hover {
     background-color: #295F3E;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+button:focus,
+button:active {
+    outline: none;
+    border-color: none;
+    transform: scale(1);
+}
+
+@media only screen and (max-width: 1300px) {
+
+    /* .pagination li {
+        width: 40px;
+        height: 40px;
+    } */
+    .above-table {
+        display: flex;
+        flex-wrap: wrap;
+    }
+}
+
+@media only screen and (max-width: 1200px) {
+    /* .pagination a.page-link {
+        color: blue;
+    }
+
+    .pagination li {
+        font-size: 10px;
+        width: 20px;
+        height: 20px;
+        padding: 0;
+    } */
+}
+
+@media only screen and (max-width: 992px) {
+    /* .pagination li {
+        color: red;
+    }
+
+    .pagination a.page-link {
+        color: red;
+    }
+
+    .add-product-button {
+        font-size: 10px;
+    } */
 }
