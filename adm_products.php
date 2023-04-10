@@ -111,9 +111,17 @@ $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
               </div>
               <!-- <div class="col-md-1"></div> -->
               <!-- Searchbar -->
-              <div class="searchbar col-md-7">
+              <!-- <div class="searchbar col-md-7">
                 <div class="input-group rounded">
                   <input type="search" class="form-control rounded" style="width: 300px;" placeholder="Search for products (e.g. Broccoli)" aria-label="Search" aria-describedby="search-addon" />
+                </div>
+              </div> -->
+              <div class="input-group" style="max-width: 550px;">
+                <input type="text" class="form-control" placeholder="Search orders here (e.g. Karen Smith)">
+                <div class="input-group-append">
+                  <button class="btn btn-primary bg-success" style="border: none;">
+                    <i class="fas fa-search"></i>
+                  </button>
                 </div>
               </div>
 

@@ -104,20 +104,19 @@ $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <!-- ABOVE TABLE -->
                     <div class="container bg-light" style="border-bottom: 1.5px solid #DFE2E5;">
                         <div class="row align-items-center p-3">
-                            <!-- Button -->
-                            <!-- <div class="add-product-button col-md-3">
-                                <button class="adm-table-button" disabled> Add New Customer</button>
-                            </div> -->
-                            <!-- <div class="col-md-1"></div> -->
                             <!-- Searchbar -->
-                            <div class="searchbar col-md-10">
+                            <!-- <div class="searchbar col-md-10">
                                 <div class="input-group rounded">
                                     <input type="search" class="form-control rounded" style="width: 300px;" placeholder="Search for customers (e.g. Dodong Janjan)" aria-label="Search" aria-describedby="search-addon" />
                                 </div>
+                            </div> -->
+                            <div class="input-group mx-3 my-2">
+                                <input type="text" class="form-control" placeholder="Search orders here (e.g. Karen Smith)">
+                                <div class="input-group-append"><button class="btn btn-primary bg-success" style="border: none;"><i class="fas fa-search"></i></button></div>
                             </div>
 
                             <!-- Pagination -->
-                            <div class="col-md-2">
+                            <!-- <div class="col-md-2">
                                 <ul class="pagination  m-0">
                                     <?php
                                     for ($page = 1; $page <= $total_pages; $page++) {
@@ -129,7 +128,7 @@ $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                     }
                                     ?>
                                     <ul>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                     <div class="my-table table-hover table-striped" style="margin: 30px;">

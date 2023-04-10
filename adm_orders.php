@@ -53,23 +53,6 @@ $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <link rel="stylesheet" href="newstyle.css">
     <title>Orders</title>
 </head>
-<script>
-    $(document).ready(function() {
-        $('#search-input').on('input', function() {
-            var query = $(this).val();
-            $.ajax({
-                type: 'POST',
-                url: 'search.php',
-                data: {
-                    query: query
-                },
-                success: function(data) {
-                    $('.my-table tbody').html(data);
-                }
-            });
-        });
-    });
-</script>
 
 <body class="bg-light min-height-100">
     <div class="container-fluid">
@@ -131,30 +114,15 @@ $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <!-- ABOVE TABLE -->
                     <div class="container bg-light" style="border-bottom: 1.5px solid #DFE2E5;">
                         <div class="row align-items-center p-3">
-                            <!-- Button -->
-                            <div class="add-product-button col-md-3">
-                                <button class="adm-table-button"> Add New Order</button>
-                            </div>
-                            <!-- Searchbar -->
-                            <div class="input-group rounded" style="width: 550px;">
-                                <input type="text" id="search-input" class="form-control">
+                            <div class="input-group mx-3 my-2">
+                                <input type="text" class="form-control" placeholder="Search orders here (e.g. Karen Smith)">
                                 <div class="input-group-append">
-                                    <button type="button" class="btn btn-outline-secondary">Search</button>
-                                    <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <span class="sr-only">Toggle Dropdown</span>
-                                    </button>
-                                    <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="#">Action</a>
-                                        <a class="dropdown-item" href="#">Another action</a>
-                                        <a class="dropdown-item" href="#">Something else here</a>
-                                        <div role="separator" class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#">Separated link</a>
-                                    </div>
+                                    <button class="btn btn-primary bg-success" style="border: none;"><i class="fas fa-search"></i></button>
                                 </div>
                             </div>
 
                             <!-- Pagination -->
-                            <div class="col-md-2">
+                            <!-- <div class="col-md-2">
                                 <ul class="pagination  m-0">
                                     <?php
                                     for ($page = 1; $page <= $total_pages; $page++) {
@@ -166,10 +134,10 @@ $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                     }
                                     ?>
                                     <ul>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
-                    <div class="my-table table-hover table-striped" style="margin: 30px;">
+                    <div class="my-table table-hover table-striped" id="orders-table" style="margin: 30px;">
                         <table class="table align-middle mb-0 bg-white" style="border: 1px solid #DFE2E5;">
                             <thead class="bg-white">
                                 <tr>
