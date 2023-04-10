@@ -10,11 +10,14 @@ function searchOrders($conn, $tableFunction, $tableName, $query) {
     if (isset($_POST['search'])) {
         $tableFunction($conn, $query);
     } else {
-        $tableFunction($conn, "SELECT * FROM $tableName, AccountTbl.acc_name");
+        $tableFunction($conn, "SELECT OrderTbl.*, AccountTbl.acc_name 
+                                 FROM OrderTbl 
+                                 JOIN AccountTbl 
+                                 ON OrderTbl.acc_id = AccountTbl.acc_id");
     }
 }
 
-function getOrderTable($conn, $query) {
+function getOrderrrrrrTable($conn, $query) {
     $stmt = $conn->query($query);
     if ($stmt->rowCount() > 0) { ?>
         <table>
