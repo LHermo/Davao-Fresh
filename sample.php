@@ -2,6 +2,28 @@
 include 'conn.php';
 include 'functions.php';
 
+// sa pagination ni na code
+$results_per_page = 6;
+// Retrieve total number of results from the database
+$sql = "SELECT COUNT(*) AS count FROM OrderTbl";
+$stmt = $conn->prepare($sql);
+$stmt->execute();
+$row = $stmt->fetch(PDO::FETCH_ASSOC);
+$total_results = $row['count'];
+
+// Count pila ka pages tanan
+$total_pages = ceil($total_results / $results_per_page);
+
+// Check if current page number is set, else set it to 1
+if (!isset($_GET['page'])) {
+    $current_page = 1;
+} else {
+    $current_page = $_GET['page'];
+}
+// Calculate the starting and ending positions of the results on the current page
+$start = ($current_page - 1) * $results_per_page;
+$end = $start + $results_per_page;
+
 $query = "SELECT OrderTbl.*, AccountTbl.acc_name
     FROM OrderTbl
     INNER JOIN AccountTbl 
@@ -11,7 +33,19 @@ $query = "SELECT OrderTbl.*, AccountTbl.acc_name
     OR AccountTbl.acc_name LIKE '%$searchTerm%'
     OR OrderTbl.ord_status LIKE '%$searchTerm%'
     OR OrderTbl.ord_totalprice LIKE '%$searchTerm%'
-    OR OrderTbl.ord_dt LIKE '%$searchTerm%'";
+    OR OrderTbl.ord_dt LIKE '%$searchTerm%'
+    LIMIT $start, $results_per_page";
+
+// $query = "SELECT OrderTbl.*, AccountTbl.acc_name
+//     FROM OrderTbl
+//     INNER JOIN AccountTbl 
+//     ON OrderTbl.acc_id = AccountTbl.acc_id 
+//     WHERE OrderTbl.ord_id LIKE '%$searchTerm%'
+//     OR AccountTbl.acc_id LIKE '%$searchTerm%'
+//     OR AccountTbl.acc_name LIKE '%$searchTerm%'
+//     OR OrderTbl.ord_status LIKE '%$searchTerm%'
+//     OR OrderTbl.ord_totalprice LIKE '%$searchTerm%'
+//     OR OrderTbl.ord_dt LIKE '%$searchTerm%'";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -89,18 +123,33 @@ $query = "SELECT OrderTbl.*, AccountTbl.acc_name
                 <div style="border: 1.5px solid #DFE2E5; border-radius: 10px;">
 
                     <!-- Search Bar -->
-                    <div class="container bg-light" style="border-bottom: 1.5px solid #DFE2E5;">
-                        <form method="post">
-                            <div class="row align-items-center p-3">
-                                <div class="input-group mx-3 my-2">
-                                    <input type="text" name="searchTerm" id="searchTerm" class="form-control" placeholder="Search orders here (e.g. Karen Smith)">
-                                    <div class="input-group-append">
-                                        <button type="submit" name="search" value="Search" class="btn btn-primary bg-success" style="border: none;"><i class="fas fa-search"></i></button>
+                    <div class="container bg-white p-0">
+                        <div class="bg-light" style="border-bottom: 1.5px solid #DFE2E5;">
+                            <form method="post">
+                                <div class="row align-items-center p-3">
+                                    <div class="input-group mx-3 my-2" style="width: 800px;">
+                                        <input type="text" name="searchTerm" id="searchTerm" class="form-control" placeholder="Search orders here (e.g. Karen Smith)">
+                                        <div class="input-group-append">
+                                            <button type="submit" name="search" value="Search" class="btn btn-primary bg-success" style="border: none;"><i class="fas fa-search"></i></button>
+                                        </div>
+                                    </div>
+                                    <!-- Pagination here -->
+                                    <div class="col-md-2">
+                                        <ul class="pagination  m-0">
+                                            <?php
+                                            for ($page = 1; $page <= $total_pages; $page++) {
+                                                if ($page == $current_page) {
+                                                    echo '<li class="page-item active"><a class="page-link" href="#">' . $page . '</a></li>';
+                                                } else {
+                                                    echo '<li class="page-item"><a class="page-link" href="?page=' . $page . '">' . $page . '</a></li>';
+                                                }
+                                            }
+                                            ?>
+                                            <ul>
                                     </div>
                                 </div>
-                                <!-- Pagination here -->
-                            </div>
-                        </form>
+                            </form>
+                        </div>
 
                         <!-- Table Content -->
                         <?php searchOrders(
