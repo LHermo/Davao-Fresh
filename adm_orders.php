@@ -35,6 +35,7 @@ $query = "SELECT OrderTbl.*, AccountTbl.acc_name
     OR OrderTbl.ord_totalprice LIKE '%$searchTerm%'
     OR OrderTbl.ord_dt LIKE '%$searchTerm%'
     LIMIT $start, $results_per_page";
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -104,7 +105,7 @@ $query = "SELECT OrderTbl.*, AccountTbl.acc_name
                 <div class="p-2">
                     <h4 class="fw-bold">Orders</h4>
                     <p class="small text-muted">
-                        Find and search order details on the table below.
+                        Find and search orders and their details on the table below.
                         Thanks for your hard work!</p>
                 </div>
 
@@ -112,7 +113,7 @@ $query = "SELECT OrderTbl.*, AccountTbl.acc_name
                 <div style="border: 1.5px solid #DFE2E5; border-radius: 10px;">
 
                     <div class="container bg-light" style="border-bottom: 1.5px solid #DFE2E5;">
-                        <!-- Search Bar -->
+                        <!-- Search bar -->
                         <form method="post">
                             <div class="row align-items-center p-3">
                                 <div class="input-group mx-3 my-2">
@@ -121,20 +122,6 @@ $query = "SELECT OrderTbl.*, AccountTbl.acc_name
                                         <button type="submit" name="search" value="Search" class="btn btn-primary bg-success" style="border: none;"><i class="fas fa-search"></i></button>
                                     </div>
                                 </div>
-                                <!-- Pagination here -->
-                                <!-- <div class="col-md-2">
-                                        <ul class="pagination  m-0">
-                                            <?php
-                                            // for ($page = 1; $page <= $total_pages; $page++) {
-                                            //     if ($page == $current_page) {
-                                            //         echo '<li class="page-item active"><a class="page-link" href="#">' . $page . '</a></li>';
-                                            //     } else {
-                                            //         echo '<li class="page-item"><a class="page-link" href="?page=' . $page . '">' . $page . '</a></li>';
-                                            //     }
-                                            // }
-                                            ?>
-                                            <ul>
-                                    </div> -->
                             </div>
                         </form>
                     </div>
@@ -143,15 +130,14 @@ $query = "SELECT OrderTbl.*, AccountTbl.acc_name
                     <?php searchOrders(
                         $conn,
                         'getOrderTable',
-                        'OrderTbl',
                         $query
                     );
 
-                    function getOrderTable($conn, $query) {
+                    function getOrderTable($conn, $query)
+                    {
                         $stmt = $conn->query($query);
                         if ($stmt->rowCount() > 0) { ?>
-
-                            <!-- Full Order Table diri -->
+                            <!-- Orders Table -->
                             <div class="my-table table-hover table-striped" id="orders-table" style="margin: 30px;">
                                 <table class="table align-middle mb-0 bg-white" style="border: 1px solid #DFE2E5;">
                                     <thead class="bg-white">
@@ -161,17 +147,17 @@ $query = "SELECT OrderTbl.*, AccountTbl.acc_name
                                             <th>Client</th>
                                             <th>Total Payment</th>
                                             <th>Date</th>
-                                            <th>Actions</th>
+                                            <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php
                                         while ($row = $stmt->fetch()) : ?>
                                             <tr>
-                                                <td> <!-- Order ID -->
+                                                <td> <!-- ID -->
                                                     <p class="fw-bold mb-1 pl-0"> <?php echo $row['ord_id']; ?> </p>
                                                 </td>
-                                                <td> <!-- Order Status -->
+                                                <td> <!-- Status -->
                                                     <?php
                                                     if ($row['ord_status'] == 'Delivered') {
                                                         echo '<span class="badge badge-success rounded-pill d-inline">' . $row['ord_status'] . '</span>';
@@ -184,18 +170,18 @@ $query = "SELECT OrderTbl.*, AccountTbl.acc_name
                                                     }
                                                     ?>
                                                 </td>
-                                                <td> <!-- User Name + ID -->
+                                                <td> <!-- Client Name + ID -->
                                                     <div class="d-flex align-items-center">
                                                         <div class="ms-3">
                                                             <p class="fw-bold mb-1" style="font-weight: 500;"><?php echo $row['acc_name']; ?></p>
-                                                            <p class="text-muted mb-0 small">User ID: <?php echo $row['acc_id']; ?>'</p>
+                                                            <p class="text-muted mb-0 small"><?php echo $row['acc_id'] ?></p>
                                                         </div>
                                                     </div>
                                                 </td>
-                                                <td> <!-- Total Price sa Order -->
-                                                    <p class="fw-bold mb-1">₱ <?php echo $row['ord_totalprice']; ?> .00</p>
+                                                <td> <!-- Total Payment -->
+                                                    <p class="fw-bold mb-1">₱ <?php echo $row['ord_totalprice']; ?>.00</p>
                                                 </td>
-                                                <td> <!-- Order Date -->
+                                                <td> <!-- Date -->
                                                     <p class="fw-bold mb-1"> <?php echo $row['ord_dt']; ?></p>
                                                 </td>
                                                 <td> <!-- Actions -->
@@ -216,7 +202,6 @@ $query = "SELECT OrderTbl.*, AccountTbl.acc_name
                             </div>
                         <?php } ?>
                 </div>
-                <!-- end of products table -->
             </div>
         </div>
     </div>

@@ -147,7 +147,7 @@ $query = "SELECT * FROM AccountTbl
                                             <th>Full Name</th>
                                             <th>Address</th>
                                             <th>Phone</th>
-                                            <th>Actions</th>
+                                            <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
