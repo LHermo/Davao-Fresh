@@ -6,7 +6,7 @@ if (isset($_POST['search'])) { // Check if the search form has been submitted
     $searchTerm = $_POST['searchTerm']; // Set the $searchTerm variable to the submitted value
 }
 
-function searchOrders($conn, $tableFunction, $tableName, $query) {
+function searchOrders($conn, $tableFunction, $query) {
     if (isset($_POST['search'])) {
         $tableFunction($conn, $query);
     } else {
@@ -14,6 +14,22 @@ function searchOrders($conn, $tableFunction, $tableName, $query) {
                                  FROM OrderTbl 
                                  JOIN AccountTbl 
                                  ON OrderTbl.acc_id = AccountTbl.acc_id");
+    }
+}
+
+function getCustomerTable($conn, $tableFunction, $query) {
+    if (isset($_POST['search'])) {
+        $tableFunction($conn, $query);
+    } else {
+        $tableFunction($conn, "SELECT * FROM AccountTbl WHERE acc_role = 'customer'");
+    }
+}
+
+function displayTable($conn, $tableFunction, $tableName, $query){
+    if (isset($_POST['search'])) {
+        $tableFunction($conn, $query);
+    } else {
+        $tableFunction($conn, "SELECT * FROM $tableName");
     }
 }
 
