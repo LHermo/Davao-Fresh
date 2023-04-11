@@ -25,6 +25,15 @@ function getCustomerTable($conn, $tableFunction, $query) {
     }
 }
 
+function displayProducts($conn, $tableFunction, $firstquery, $query)
+{
+    if (isset($_POST['search'])) {
+        $tableFunction($conn, $query);
+    } else {
+        $tableFunction($conn, $firstquery);
+    }
+}
+
 function displayTable($conn, $tableFunction, $tableName, $query){
     if (isset($_POST['search'])) {
         $tableFunction($conn, $query);
