@@ -1,6 +1,7 @@
 <?php
 include 'conn.php';
 include 'functions.php';
+include 'modal_forms.php';
 
 // sa pagination ni na code
 $results_per_page = 6;
@@ -42,10 +43,16 @@ $query = "SELECT * FROM ProductTbl
   <link rel="icon" href="assets/icon-green.svg">
   <link rel="stylesheet" href="newstyle.css">
   <title>Products</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 </head>
 
 
 <body class="bg-light min-height-100">
+
+
   <div class="container-fluid">
     <div class="row flex-nowrap">
 
@@ -113,7 +120,7 @@ $query = "SELECT * FROM ProductTbl
               <div class="row align-items-center p-3">
                 <!-- Button -->
                 <div class="add-product-button col-md-3">
-                  <button class="adm-table-button"> Add New Product</button>
+                  <button type="button" class="btn btn-success" data-toggle="modal" data-target="#add-product-modal">Add New Product</button>
                 </div>
                 <div class="input-group" style="max-width: 550px;">
                   <input type="text" name="searchTerm" id="searchTerm" class="form-control" placeholder="Search orders here (e.g. Karen Smith)">
@@ -183,13 +190,12 @@ $query = "SELECT * FROM ProductTbl
                         </td>
                         <!-- Price + Unit of Measurement  -->
                         <td>
-                          <!-- <span class="badge badge-success rounded-pill d-inline">Active</span> -->
                           <p class="fw-bold mb-1" style="font-weight: 500;">₱ <?php echo $row['prd_price']; ?>.00</p>
                           <p class="text-muted mb-0 small"><?php echo $row['prd_unit']; ?></p>
                         </td>
                         <!-- Actions  -->
                         <td>
-                          <button type="button" class="btn btn-sm btn-outline-primary">Edit</button>
+                          <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#edit-product-modal" data-id="<?php echo $row['prd_id'] ?>" data-name="<?php echo $row['prd_name'] ?>" data-price="<?php echo $row['prd_price'] ?>" data-unit="<?php echo $row['prd_unit'] ?>" data-cat="<?php echo $row['prd_cat'] ?>" data-img="<?php echo $row['prd_img'] ?>">Edit</button>
                           <button type="button" class="btn btn-sm btn-outline-danger">Remove</button>
                         </td>
                         </td>
@@ -211,3 +217,51 @@ $query = "SELECT * FROM ProductTbl
     </div>
   </div>
 </body>
+<script>
+  // Add Product
+  $(document).ready(function() {
+    $('[data-toggle="modal"]').click(function() {
+      $($(this).data("target")).modal("show");
+    });
+  });
+
+  // Handle form submission with AJAX and PDO
+  $(document).on("submit", "#add-product-form", function(event) {
+    event.preventDefault();
+    var form = $(this);
+    var url = form.attr("action");
+    var method = form.attr("method");
+    var data = form.serialize();
+    $.ajax({
+      url: url,
+      type: method,
+      data: data,
+      success: function(response) {
+        alert(response); // Display success message
+        location.reload(); // Refresh the page
+      },
+      error: function(xhr, status, error) {
+        alert("An error occurred while submitting the form: " + error); // Display error message
+      }
+    });
+  });
+
+  // Populate data on edit modal
+  $(document).on('click', '[data-target="#edit-product-modal"]', function() {
+    var id = $(this).data('id');
+    var name = $(this).data('name');
+    var cat = $(this).data('cat');
+    var price = $(this).data('price');
+    var unit = $(this).data('unit');
+    var img = $(this).data('img');
+
+    $('#edit-id').val(id);
+    $('#edit-name').val(name);
+    $('#edit-cat').val(cat);
+    $('#edit-price').val(price);
+    $('#edit-unit').val(unit);
+    $('#edit-img').val(img);
+
+    $('#edit-product-modal').modal('show');
+  });
+</script>
