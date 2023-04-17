@@ -196,11 +196,15 @@ $query = "SELECT * FROM ProductTbl
                                                 <!-- Actions  -->
                                                 <td>
                                                     <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#edit-product-modal" data-id="<?php echo $row['prd_id'] ?>" data-name="<?php echo $row['prd_name'] ?>" data-price="<?php echo $row['prd_price'] ?>" data-unit="<?php echo $row['prd_unit'] ?>" data-cat="<?php echo $row['prd_cat'] ?>" data-img="<?php echo $row['prd_img'] ?>">Edit</button>
-                                                    <!-- <button type="button" class="btn btn-sm btn-outline-danger remove-button">Remove</button> -->
-                                                    <form method="post" action="remove-product.php">
-                                                        <input type="hidden" name="prd_id" value="<?php echo $row['prd_id']; ?>">
-                                                        <button type="submit" class="btn btn-sm btn-outline-danger">Remove</button>
+                                                    <!-- <form method="POST" action="remove-product.php">
+                                                        <input type="hidden" name="id" value="<?php echo $row['prd_id']; ?>">
+                                                        <button type="submit" class="btn btn-sm btn-outline-danger delete-btn">Delete</button>
+                                                    </form> -->
+                                                    <form method="POST" action="remove-product.php">
+                                                        <input type="hidden" name="id" value="<?php echo $row['prd_id']; ?>">
+                                                        <button type="submit" class="btn btn-sm btn-outline-danger delete-btn">Delete</button>
                                                     </form>
+                                                </td>
                                             </tr>
                                         <?php endwhile;
                                     } else { ?>
@@ -268,4 +272,25 @@ $query = "SELECT * FROM ProductTbl
     });
 
     // Remove product
+    $(document).ready(function() {
+        $('.delete-btn').on('click', function() {
+            var id = $(this).data('id');
+            $('#confirmDeleteBtn').data('id', id); // Set the ID on the confirm button
+            $('#confirmModal').modal('show');
+        });
+
+        $('#confirmDeleteBtn').on('click', function() {
+            var id = $(this).data('id');
+            $.ajax({
+                url: 'remove-product.php',
+                type: 'POST',
+                data: {
+                    id: id
+                },
+                success: function() {
+                    window.location.reload(); // Reload the page after successful deletion
+                }
+            });
+        });
+    });
 </script>
