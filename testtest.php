@@ -196,9 +196,11 @@ $query = "SELECT * FROM ProductTbl
                                                 <!-- Actions  -->
                                                 <td>
                                                     <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#edit-product-modal" data-id="<?php echo $row['prd_id'] ?>" data-name="<?php echo $row['prd_name'] ?>" data-price="<?php echo $row['prd_price'] ?>" data-unit="<?php echo $row['prd_unit'] ?>" data-cat="<?php echo $row['prd_cat'] ?>" data-img="<?php echo $row['prd_img'] ?>">Edit</button>
-                                                    <button type="button" class="btn btn-sm btn-outline-danger">Remove</button>
-                                                </td>
-                                                </td>
+                                                    <!-- <button type="button" class="btn btn-sm btn-outline-danger remove-button">Remove</button> -->
+                                                    <form method="post" action="remove-product.php">
+                                                        <input type="hidden" name="prd_id" value="<?php echo $row['prd_id']; ?>">
+                                                        <button type="submit" class="btn btn-sm btn-outline-danger">Remove</button>
+                                                    </form>
                                             </tr>
                                         <?php endwhile;
                                     } else { ?>
@@ -264,4 +266,6 @@ $query = "SELECT * FROM ProductTbl
 
         $('#edit-product-modal').modal('show');
     });
+
+    // Remove product
 </script>
