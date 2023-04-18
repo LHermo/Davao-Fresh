@@ -8,46 +8,6 @@
 </head>
 
 <body>
-    <!-- Removal Confirmatory Modal -->
-    <div id="confirmModal" class="modal fade">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Confirm Delete</h5>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-                <div class="modal-body">
-                    Are you sure you want to delete this record?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                    <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Yes</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <!-- Success Modal -->
-    <div class="modal fade" id="success-modal" tabindex="-1" role="dialog" aria-labelledby="success-modal-label" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="success-modal-label">Success!</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    The product data has been updated successfully.
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- Add Product Form diri -->
     <div class="modal fade" id="add-product-modal" tabindex="-1" role="dialog" aria-labelledby="add-product-modal-label" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -141,9 +101,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <!-- <button type="button" class="btn btn-sm btn-primary edit-product-btn" data-toggle="modal" data-target="#editProductModal" data-product-id="<?php echo $row['prd_id']; ?>">Save Changes</button> -->
-                        <!-- <button type="submit" class="btn btn-sm btn-primary edit-product-btn" data-toggle="modal" data-target="#edit-product-modal">Save Changes</button> -->
-                        <button type="submit" class="btn btn-sm btn-primary edit-product-btn">Save Changes</button>
+                        <button type="submit" class="btn btn-success edit-product-btn">Save Changes</button>
                     </div>
                 </form>
             </div>

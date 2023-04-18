@@ -195,14 +195,10 @@ $query = "SELECT * FROM ProductTbl
                                                 </td>
                                                 <!-- Actions  -->
                                                 <td>
-                                                    <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#edit-product-modal" data-id="<?php echo $row['prd_id'] ?>" data-name="<?php echo $row['prd_name'] ?>" data-price="<?php echo $row['prd_price'] ?>" data-unit="<?php echo $row['prd_unit'] ?>" data-cat="<?php echo $row['prd_cat'] ?>" data-img="<?php echo $row['prd_img'] ?>">Edit</button>
-                                                    <!-- <form method="POST" action="remove-product.php">
-                                                        <input type="hidden" name="id" value="<?php echo $row['prd_id']; ?>">
-                                                        <button type="submit" class="btn btn-sm btn-outline-danger delete-btn">Delete</button>
-                                                    </form> -->
                                                     <form method="POST" action="remove-product.php">
+                                                        <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#edit-product-modal" data-id="<?php echo $row['prd_id'] ?>" data-name="<?php echo $row['prd_name'] ?>" data-price="<?php echo $row['prd_price'] ?>" data-unit="<?php echo $row['prd_unit'] ?>" data-cat="<?php echo $row['prd_cat'] ?>" data-img="<?php echo $row['prd_img'] ?>">Edit</button>
                                                         <input type="hidden" name="id" value="<?php echo $row['prd_id']; ?>">
-                                                        <button type="submit" class="btn btn-sm btn-outline-danger delete-btn">Delete</button>
+                                                        <button type="submit" class="btn btn-sm btn-outline-danger delete-btn" data-confirm="Are you sure you want to delete this product?">Delete</button>
                                                     </form>
                                                 </td>
                                             </tr>
@@ -247,7 +243,7 @@ $query = "SELECT * FROM ProductTbl
                 location.reload(); // Refresh the page
             },
             error: function(xhr, status, error) {
-                alert("An error occurred while submitting the form: " + error); // Display error message
+                alert("An error occurred while submitting the form: " + error);
             }
         });
     });
@@ -272,25 +268,13 @@ $query = "SELECT * FROM ProductTbl
     });
 
     // Remove product
-    $(document).ready(function() {
-        $('.delete-btn').on('click', function() {
-            var id = $(this).data('id');
-            $('#confirmDeleteBtn').data('id', id); // Set the ID on the confirm button
-            $('#confirmModal').modal('show');
-        });
-
-        $('#confirmDeleteBtn').on('click', function() {
-            var id = $(this).data('id');
-            $.ajax({
-                url: 'remove-product.php',
-                type: 'POST',
-                data: {
-                    id: id
-                },
-                success: function() {
-                    window.location.reload(); // Reload the page after successful deletion
-                }
-            });
+    const deleteButtons = document.querySelectorAll('.delete-btn');
+    deleteButtons.forEach(button => {
+        button.addEventListener('click', event => {
+            const message = button.getAttribute('data-confirm');
+            if (!confirm(message)) {
+                event.preventDefault(); // cancel the default delete action
+            }
         });
     });
 </script>
