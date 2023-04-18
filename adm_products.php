@@ -57,57 +57,19 @@ $query = "SELECT * FROM ProductTbl
     <div class="row flex-nowrap">
 
       <!-- Side bar code starts here -->
-      <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0" style="background: #214D34; min-height: 870px;">
-        <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
-
-          <!-- Si Logo -->
-          <a href="adm_products.php" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-            <span class="fs-5 d-none d-sm-inline" style="margin: 20px 0px;"><img style="width: 180px;" src="assets/LOGO - Davao Fresh Dark.svg" alt=""></span>
-          </a>
-          <!-- Si Menu tabs -->
-          <ul style="margin-top: 30px; width: 100%;" class="active nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
-            <li class="nav-item w-100 change-when-hovered">
-              <a href="adm_products.php" class="nav-link d-flex align-items-center px-2 text-white">
-                <i class="material-icons text-white">inventory</i><span class="ms-1 d-none d-sm-inline" style="padding-left: 10px;">Products</span>
-              </a>
-            </li>
-            <li class="w-100 change-when-hovered">
-              <a href="adm_customers.php" class="nav-link px-2 d-flex align-items-center">
-                <i class="material-icons text-white">diversity_3</i><span class="ms-1 d-none d-sm-inline text-white " style="padding-left: 10px;">Customers</span></a>
-            </li>
-            <li class="w-100 change-when-hovered">
-              <a href="adm_orders.php" class="nav-link px-2 d-flex align-items-center">
-                <i class="material-icons text-white">receipt_long</i><span class="ms-1 d-none d-sm-inline text-white" style="padding-left: 10px;">Orders</span>
-              </a>
-            </li>
-            <li class="w-100 change-when-hovered">
-              <a href="adm_reports.php" class="nav-link px-2 d-flex align-items-center">
-                <i class="material-icons text-white">query_stats</i><span class="ms-1 d-none d-sm-inline text-white" style="padding-left: 10px;">Reports</span>
-              </a>
-            </li>
-          </ul>
-          <hr>
-
-          <!-- Si Logout -->
-          <ul class="nav nav=pills flex-column w-100">
-            <li class="text-align-middle change-when-hovered">
-              <a href="login.php" class="nav-link px-2 d-flex align-items-center">
-                <i class="material-icons text-white">logout</i><span class="ms-1 d-none d-sm-inline text-white" style="padding-left: 10px;">Logout</span>
-              </a>
-            </li>
-            </li>
-          </ul>
-        </div>
-      </div>
+      <?php
+      $active_tab = 'products';
+      include 'adm_navbar.php';
+      ?>
 
       <!-- Content na ni diri -->
       <div class="col py-3 bg-white m-4 p-5 rounded shadow-sm">
 
         <!-- Table Title + Description -->
         <div class="p-2">
-          <h4 class="fw-bold">Orders</h4>
+          <h4 class="fw-bold">Products</h4>
           <p class="small text-muted">
-            Find and search orders and their details on the table below.
+            Find and search products and their details on the table below.
             Thanks for your hard work!</p>
         </div>
 
@@ -195,9 +157,11 @@ $query = "SELECT * FROM ProductTbl
                         </td>
                         <!-- Actions  -->
                         <td>
-                          <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#edit-product-modal" data-id="<?php echo $row['prd_id'] ?>" data-name="<?php echo $row['prd_name'] ?>" data-price="<?php echo $row['prd_price'] ?>" data-unit="<?php echo $row['prd_unit'] ?>" data-cat="<?php echo $row['prd_cat'] ?>" data-img="<?php echo $row['prd_img'] ?>">Edit</button>
-                          <button type="button" class="btn btn-sm btn-outline-danger">Remove</button>
-                        </td>
+                          <form method="POST" action="remove-product.php">
+                            <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#edit-product-modal" data-id="<?php echo $row['prd_id'] ?>" data-name="<?php echo $row['prd_name'] ?>" data-price="<?php echo $row['prd_price'] ?>" data-unit="<?php echo $row['prd_unit'] ?>" data-cat="<?php echo $row['prd_cat'] ?>" data-img="<?php echo $row['prd_img'] ?>">Edit</button>
+                            <input type="hidden" name="id" value="<?php echo $row['prd_id']; ?>">
+                            <button type="submit" class="btn btn-sm btn-outline-danger delete-btn" data-confirm="Are you sure you want to delete this product?">Delete</button>
+                          </form>
                         </td>
                       </tr>
                     <?php endwhile;
@@ -241,7 +205,7 @@ $query = "SELECT * FROM ProductTbl
         location.reload(); // Refresh the page
       },
       error: function(xhr, status, error) {
-        alert("An error occurred while submitting the form: " + error); // Display error message
+        alert("An error occurred while submitting the form: " + error);
       }
     });
   });
@@ -263,5 +227,16 @@ $query = "SELECT * FROM ProductTbl
     $('#edit-img').val(img);
 
     $('#edit-product-modal').modal('show');
+  });
+
+  // Remove product
+  const deleteButtons = document.querySelectorAll('.delete-btn');
+  deleteButtons.forEach(button => {
+    button.addEventListener('click', event => {
+      const message = button.getAttribute('data-confirm');
+      if (!confirm(message)) {
+        event.preventDefault(); // cancel the default delete action
+      }
+    });
   });
 </script>
