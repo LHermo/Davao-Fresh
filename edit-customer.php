@@ -1,27 +1,12 @@
 <?php
 include 'conn.php';
 
-try {
+// Get the status and ID parameters from the AJAX request
+$newStatus = $_POST["status"];
+$accId = $_POST["id"];
 
-    // Set PDO error mode to exception
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+$stmt = $conn->prepare("UPDATE AccountTbl SET acc_status = :status WHERE acc_id = :id");
+$stmt->execute(["status" => $newStatus, "id" => $accId]);
 
-    // Get data from AJAX request
-    $id = $_POST['id'];
-    $status = $_POST['status'];
-
-    // Prepare and execute UPDATE statement
-    $stmt = $conn->prepare("UPDATE AccountTbl SET acc_status = :status WHERE prd_id = :id");
-    $stmt->bindParam(':id', $id);
-    $stmt->bindParam(':status', $status);
-    $stmt->execute();
-
-    // Return success message
-    echo "Data updated successfully!";
-} catch (PDOException $e) {
-    // Return error message
-    echo "Error: " . $e->getMessage();
-}
-
-// Close PDO connection
-$conn = null;
+// Return a success message
+echo "Account status updated successfully.";

@@ -1,7 +1,6 @@
 <?php
 include 'conn.php';
 include 'functions.php';
-include 'modal_forms.php';
 
 // sa pagination ni na code
 $results_per_page = 6;
@@ -43,11 +42,13 @@ $query = "SELECT * FROM AccountTbl
 
 <head>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <!-- Required dependencies for Bootstrap -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.3/umd/popper.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.2/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <link rel="stylesheet" href="">
     <link rel="icon" href="assets/icon-green.svg">
@@ -139,6 +140,15 @@ $query = "SELECT * FROM AccountTbl
                                                 </td>
                                                 <td> <!-- Actions -->
                                                     <div class="dropdown">
+                                                        <select name="status" onchange="updateStatus(this.value, <?php echo $row['acc_id']; ?>)">
+                                                            <option value="active"><?php echo $row['acc_status'] ?></option>
+                                                            <option value="active">Active</option>
+                                                            <option value="inactive">Inactive</option>
+                                                            <option value="blocked">Blocked</option>
+                                                        </select>
+                                                    </div>
+
+                                                    <!-- <div class="dropdown">
                                                         <?php
                                                         if ($row['acc_status'] == 'active') {
                                                             echo '<button class="btn btn-sm btn-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">' . $row['acc_status'] . '</button>';
@@ -153,7 +163,7 @@ $query = "SELECT * FROM AccountTbl
                                                             <a class="dropdown-item" href="#" value="inactive">Inactive</a>
                                                             <a class="dropdown-item" href="#" value="blocked">Blocked</a>
                                                         </div>
-                                                    </div>
+                                                    </div> -->
                                                 </td>
                                             </tr>
                                         <?php endwhile;
@@ -232,27 +242,47 @@ $query = "SELECT * FROM AccountTbl
     });
 
     // Update database when dropdown option is selected
-    $(document).ready(function() {
-        $(".dropdown-menu a").click(function() {
-            var selectedOption = $(this).text();
-            $(this).parents(".dropdown").find('.dropdown-toggle').html(selectedOption);
-            $(this).parents(".dropdown").find('.dropdown-toggle').addClass('selected-' + selectedOption.toLowerCase());
-            $(this).parents(".dropdown").find('.dropdown-toggle').dropdown('toggle');
+    // $(document).ready(function() {
+    //     $(".dropdown-menu a").click(function() {
+    //         var selectedOption = $(this).text();
+    //         $(this).parents(".dropdown").find('.dropdown-toggle').html(selectedOption);
+    //         $(this).parents(".dropdown").find('.dropdown-toggle').addClass('selected-' + selectedOption.toLowerCase());
+    //         $(this).parents(".dropdown").find('.dropdown-toggle').dropdown('toggle');
 
-            // Make AJAX request to update data in database
-            $.ajax({
-                url: "/edit-customer.php", // Update with appropriate URL
-                method: "POST",
-                data: {
-                    status: selectedOption
-                }, // Update with appropriate data to send to server
-                success: function(response) {
-                    console.log("Data updated successfully!");
-                },
-                error: function(xhr, status, error) {
-                    console.error(error);
-                }
-            });
+    //         // Make AJAX request to update data in database
+    //         $.ajax({
+    //             url: "/edit-customer.php", // Update with appropriate URL
+    //             method: "POST",
+    //             data: {
+    //                 status: selectedOption
+    //             }, // Update with appropriate data to send to server
+    //             success: function(response) {
+    //                 console.log("Data updated successfully!");
+    //             },
+    //             error: function(xhr, status, error) {
+    //                 console.error(error);
+    //             }
+    //         });
+    //     });
+    // });
+
+    function updateStatus(newStatus, accId) {
+        // Make an AJAX request to update the account status in the database
+        $.ajax({
+            url: "edit-customer.php",
+            method: "POST",
+            data: {
+                status: newStatus,
+                id: accId
+            },
+            success: function(response) {
+                // If the update was successful, reload the page to show the updated data
+                location.reload();
+            },
+            error: function(xhr, status, error) {
+                // If there was an error, display an error message
+                alert("Error updating account status: " + error);
+            }
         });
-    });
+    }
 </script>
