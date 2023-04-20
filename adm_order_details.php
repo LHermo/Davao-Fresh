@@ -87,6 +87,17 @@ function getSubTotal($conn, $ordId)
                     <button onclick="goBack()">Go Back</button>
                 </div>
 
+                <!-- Status Dropdown -->
+                <div class="dropdown">
+                    <select name="status" onchange="updateStatus(this.value, <?php echo $ordId; ?>)">
+                        <option><?php getData($conn, $ordId, 'ord_status') ?></option>
+                        <option value="Delivered">Delivered</option>
+                        <option value="Pending">Pending</option>
+                        <option value="On Process">On Process</option>
+                        <option value="Cancelled">Cancelled</option>
+                    </select>
+                </div>
+
                 <!-- Content -->
                 <div style="display: flex;">
                     <div class="my-table table-hover" id="orders-table" style="width: 60%;">
@@ -99,7 +110,6 @@ function getSubTotal($conn, $ordId)
                                 <?php
                                 while ($row = $stmt->fetch()) : ?>
                                     <tr>
-
                                         <td> <!-- ID -->
                                             <p class="fw-bold mb-1 pl-0"> <?php echo $row['prd_id']; ?> </p>
                                         </td>
@@ -140,5 +150,23 @@ function getSubTotal($conn, $ordId)
 <script>
     function goBack() {
         window.history.back();
+    }
+
+    function updateStatus(newStatus, ordId) {
+        // Make an AJAX request to update the account status in the database
+        $.ajax({
+            url: "edit-order.php",
+            method: "POST",
+            data: {
+                status: newStatus,
+                id: ordId
+            },
+            success: function(response) {
+                location.reload();
+            },
+            error: function(xhr, status, error) {
+                alert("Error updating account status: " + error);
+            }
+        });
     }
 </script>

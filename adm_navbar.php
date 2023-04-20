@@ -21,11 +21,6 @@
                     <i class="material-icons text-white">receipt_long</i><span class="ms-1 d-none d-sm-inline text-white" style="padding-left: 10px;">Orders</span>
                 </a>
             </li>
-            <li class="w-100 change-when-hovered">
-                <a href="adm_reports.php" class="<?php echo ($active_tab == 'reports') ? 'active' : ''; ?> nav-link px-2 d-flex align-items-center">
-                    <i class="material-icons text-white">query_stats</i><span class="ms-1 d-none d-sm-inline text-white" style="padding-left: 10px;">Reports</span>
-                </a>
-            </li>
         </ul>
         <hr>
 

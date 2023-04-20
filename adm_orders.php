@@ -118,7 +118,6 @@ $query = "SELECT OrderTbl.*, AccountTbl.acc_name
                                             <th>Client</th>
                                             <th>Total Payment</th>
                                             <th>Date</th>
-                                            <th>Status</th>
                                             <th></th>
                                         </tr>
                                     </thead>
@@ -155,8 +154,8 @@ $query = "SELECT OrderTbl.*, AccountTbl.acc_name
                                                 <td> <!-- Date -->
                                                     <p class="fw-bold mb-1"> <?php echo $row['ord_dt']; ?></p>
                                                 </td>
-                                                <td> <!-- Actions -->
-                                                    <div class="dropdown">
+                                                <!-- <td> Actions -->
+                                                <!-- <div class="dropdown">
                                                         <select name="status" onchange="updateStatus(this.value, <?php echo $row['ord_id']; ?>)">
                                                             <option><?php echo $row['ord_status'] ?></option>
                                                             <option value="Delivered">Delivered</option>
@@ -164,8 +163,8 @@ $query = "SELECT OrderTbl.*, AccountTbl.acc_name
                                                             <option value="On Process">On Process</option>
                                                             <option value="Cancelled">Cancelled</option>
                                                         </select>
-                                                    </div>
-                                                </td>
+                                                    </div> -->
+                                                <!-- </td> -->
 
                                                 <td> <!-- Actions -->
                                                     <form action="adm_order_details.php" method="POST">
@@ -193,23 +192,23 @@ $query = "SELECT OrderTbl.*, AccountTbl.acc_name
     </div>
 </body>
 <script>
-    function updateStatus(newStatus, ordId) {
-        // Make an AJAX request to update the account status in the database
-        $.ajax({
-            url: "edit-order.php",
-            method: "POST",
-            data: {
-                status: newStatus,
-                id: ordId
-            },
-            success: function(response) {
-                location.reload();
-            },
-            error: function(xhr, status, error) {
-                alert("Error updating account status: " + error);
-            }
-        });
-    }
+    // function updateStatus(newStatus, ordId) {
+    //     // Make an AJAX request to update the account status in the database
+    //     $.ajax({
+    //         url: "edit-order.php",
+    //         method: "POST",
+    //         data: {
+    //             status: newStatus,
+    //             id: ordId
+    //         },
+    //         success: function(response) {
+    //             location.reload();
+    //         },
+    //         error: function(xhr, status, error) {
+    //             alert("Error updating account status: " + error);
+    //         }
+    //     });
+    // }
 
     function viewDetails(ordId) {
         $.ajax({
