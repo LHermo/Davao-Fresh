@@ -107,6 +107,9 @@
             </div>
         </div>
     </div> <!-- End of Edit Product Form -->
+
+    <!-- View Order Form diri -->
+    <!-- End of View Order Form -->
 </body>
 
 </html>

@@ -242,7 +242,6 @@ $query = "SELECT * FROM AccountTbl
     });
 
     function updateStatus(newStatus, accId) {
-        // Make an AJAX request to update the account status in the database
         $.ajax({
             url: "edit-customer.php",
             method: "POST",
@@ -251,11 +250,9 @@ $query = "SELECT * FROM AccountTbl
                 id: accId
             },
             success: function(response) {
-                // If the update was successful, reload the page to show the updated data
                 location.reload();
             },
             error: function(xhr, status, error) {
-                // If there was an error, display an error message
                 alert("Error updating account status: " + error);
             }
         });

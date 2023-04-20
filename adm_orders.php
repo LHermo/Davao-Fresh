@@ -166,9 +166,14 @@ $query = "SELECT OrderTbl.*, AccountTbl.acc_name
                                                         </select>
                                                     </div>
                                                 </td>
+
                                                 <td> <!-- Actions -->
-                                                    <button type="button" class="btn btn-sm btn-outline-success px-4">View</button>
+                                                    <form action="adm_order_details.php" method="POST">
+                                                        <input type="hidden" name="id" value="<?php echo $row['ord_id']; ?>">
+                                                        <button type="submit" name="view" class="btn btn-sm btn-outline-success px-4">View</button>
+                                                    </form>
                                                 </td>
+
                                             </tr>
                                         <?php endwhile;
                                     } else { ?>
@@ -198,12 +203,26 @@ $query = "SELECT OrderTbl.*, AccountTbl.acc_name
                 id: ordId
             },
             success: function(response) {
-                // If the update was successful, reload the page to show the updated data
                 location.reload();
             },
             error: function(xhr, status, error) {
-                // If there was an error, display an error message
                 alert("Error updating account status: " + error);
+            }
+        });
+    }
+
+    function viewDetails(ordId) {
+        $.ajax({
+            url: "adm_order_details.php",
+            method: "GET",
+            data: {
+                id: ordId
+            },
+            success: function(response) {
+                window.location.href = "adm_order_details.php?ord_id=" + ordId;
+            },
+            error: function(xhr, status, error) {
+                alert("Error getting order details: " + error);
             }
         });
     }
