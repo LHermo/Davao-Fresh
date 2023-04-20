@@ -51,8 +51,8 @@ require_once('conn.php');
                         shopping!</p>
                 </div>
                 <div>
-                    <button class="button-main spaced colored"> Start Shopping</button>
-                    <button class="button-main bordered"> Sign Up</button>
+                    <button class="button-main spaced colored" onclick="location.href='products.php'"> Start Shopping</button>
+                    <button class="button-main bordered" onclick="location.href='signUp.php'">Sign Up</button>
                 </div>
             </div>
             <div class="panel right">
@@ -67,15 +67,12 @@ require_once('conn.php');
     <footer class="footer navbar-fixed-bottom">
         <p>Developed by </p>
         <p><a href="https://www.facebook.com/libby.hermo" target="_blank">Libby Marowen D. Hermo</a></p>
-        <p>and </p>
-        <p><a href="https://www.facebook.com/cristine.albisocomajes.3" target="_blank">Ma. Cristine Joy
-                Comajes</a></p>
     </footer>
 </body>
 
 <script>
     // Sa Navbar animations ni
-    window.addEventListener('scroll', function () {
+    window.addEventListener('scroll', function() {
         var navbar = document.querySelector('nav');
         if (window.pageYOffset > 0) {
             navbar.classList.add('nav-shadow');
@@ -84,7 +81,9 @@ require_once('conn.php');
         }
     });
 
-    window.onscroll = function () { scrollFunction() };
+    window.onscroll = function() {
+        scrollFunction()
+    };
 
     function scrollFunction() {
         if (document.body.scrollTop > 60 || document.documentElement.scrollTop > 60) {
@@ -109,12 +108,15 @@ require_once('conn.php');
             x[i].style.display = "none";
         }
         myIndex++;
-        if (myIndex > x.length) { myIndex = 1 }
+        if (myIndex > x.length) {
+            myIndex = 1
+        }
         x[myIndex - 1].style.display = "block";
     }
 </script>
+
 </html>
 
 <?php
-    $pdo = null;
+$pdo = null;
 ?>

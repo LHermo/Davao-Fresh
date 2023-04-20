@@ -136,6 +136,7 @@ footer a {
 /* 2. PRODUCTS PAGE */
 
 /* product card */
+
 .products-hero {
     text-align: center;
 }
@@ -161,6 +162,7 @@ footer a {
     border: 2px solid #E3E3E3;
     text-align: center;
     display: inline-block;
+    margin-right: 11px;
 }
 
 .products-description {
@@ -308,7 +310,7 @@ input {
 }
 
 .categ {
-    margin: 45px 10%;
+    margin: 45px 8%;
     margin-top: 100px;
 }
 
@@ -326,9 +328,9 @@ input {
 }
 
 .cards-row {
-    display: flex;
+    display: flex-start;
     justify-content: space-between;
-    margin-inline: 10%;
+    margin-inline: 8%;
 }
 
 
