@@ -1,6 +1,19 @@
 <?php
 include 'conn.php';
 include 'functions.php';
+
+if (isset($_GET['query'])) {
+    $query = $_GET['query'];
+}
+
+$stmt = $conn->prepare("SELECT *
+    FROM ProductTbl
+    WHERE prd_name LIKE '%$query%'
+    OR prd_cat LIKE '%$query%'
+    OR prd_price LIKE '%$query%'
+    OR prd_unit LIKE '%$query%'");
+
+$stmt->execute();
 ?>
 
 <!DOCTYPE html>
@@ -38,64 +51,61 @@ include 'functions.php';
             </ul>
         </nav>
 
-        <!-- MAIN CONTENT -->
+        <!-- Main Content -->
         <div class="products-hero">
-            <h1>Explore our products</h1>
-            <p>Search through our catalog of fruits and vegetables <br>
-                locally sourced from Davao farmers</p>
+            <div class="search-div" style="margin-bottom: 50px;">
+                <form method="GET" action="testtt.php">
+                    <input class="search-bar" type="text" name="query" placeholder="Search products (e.g. Romaine Lettuce)">
+                </form>
+            </div>
         </div>
-        <div class="search-div">
-            <input class="search-bar" type="text" name="" placeholder="Search products (e.g. Brussel Sprouts)">
+        <div class="categ">
+            <div class="cat-name">Search results:</div>
         </div>
-
         <div class="all-products">
+            <?php
+            if ($stmt->rowCount() == 0) {
+                echo "<div style='margin-inline:8%;'> No products found. </div>";
+            } else {
+                // display search results
+                $counter = 0;
+                while ($row = $stmt->fetch()) :
+                    if ($counter % 5 == 0) {
+                        if ($counter > 0) {
+                            echo '</div>';
+                        }
+                        echo '<div class="cards-row">';
+                    }
+            ?>
+                    <div class="product-card" style="margin-top: 18px;  ">
+                        <div class="product-card-content">
+                            <div class="price">
+                                <span class="cost">₱ <?php echo $row['prd_price'] ?>.00<span>
+                                        <span class="description">/ <?php echo $row['prd_unit'] ?></span>
+                            </div>
+                            <div class="product-image"><img src=<?php echo $row['prd_img'] ?>></div>
+                            <div class="product-details">
+                                <p class="category"><?php echo $row['prd_cat'] ?></p>
+                                <p class="name"><?php echo $row['prd_name'] ?></p>
+                            </div>
+                            <div class="quantity-selector">
+                                <button class="minus-btn">-</button>
+                                <input class="quantity-input" type="text" min="0" value="0">
+                                <button class="plus-btn">+</button>
+                            </div>
+                            <button class="button-products">Add to basket</button>
+                        </div>
+                    </div>
+            <?php
+                    $counter++;
+                endwhile;
 
-            <!-- vegetables -->
-            <div style="margin-bottom: 50px">
-                <div class="categ">
-                    <div class="cat-name">Vegetables</div>
-                    <div class="desc">N PRODUCTS</div>
-                </div>
-                <?php getCatalog($conn, $category = "VEGETABLES"); ?>
-            </div>
-
-            <!-- fruits -->
-            <div style="margin-bottom: 50px">
-                <div class="categ">
-                    <div class="cat-name">Fruits</div>
-                    <div class="desc">N PRODUCTS</div>
-                </div>
-                <?php getCatalog($conn, $category = "FRUITS"); ?>
-            </div>
-
-            <!-- grains -->
-            <div style="margin-bottom: 50px">
-                <div class="categ">
-                    <div class="cat-name">Grains</div>
-                    <div class="desc">N PRODUCTS</div>
-                </div>
-                <?php getCatalog($conn, $category = "GRAINS"); ?>
-            </div>
-
-            <!-- herbs -->
-            <div style="margin-bottom: 50px">
-                <div class="categ">
-                    <div class="cat-name">Herbs</div>
-                    <div class="desc">N PRODUCTS</div>
-                </div>
-                <?php getCatalog($conn, $category = "HERBS AND SPICES"); ?>
-            </div>
+                echo '</div>';
+            }
+            ?>
         </div>
     </div>
     <div style="margin-top: 150px;"></div>
-    <!-- FOOTER -->
-    <footer class="footer navbar-fixed-bottom">
-        <p>Developed by </p>
-        <p><a href="https://www.facebook.com/libby.hermo" target="_blank">Libby Marowen D. Hermo</a></p>
-        <p>and </p>
-        <p><a href="https://www.facebook.com/cristine.albisocomajes.3" target="_blank">Ma. Cristine Joy
-                Comajes</a></p>
-    </footer>
 </body>
 
 <script>

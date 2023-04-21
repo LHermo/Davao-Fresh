@@ -44,9 +44,15 @@ include 'functions.php';
             <p>Search through our catalog of fruits and vegetables <br>
                 locally sourced from Davao farmers</p>
         </div>
-        <div class="search-div">
+        <!-- <div class="search-div">
             <input class="search-bar" type="text" name="" placeholder="Search products (e.g. Brussel Sprouts)">
+        </div> -->
+        <div class="search-div">
+            <form method="GET" action="testtt.php">
+                <input class="search-bar" type="text" name="query" placeholder="Search products (e.g. Brussel Sprouts)">
+            </form>
         </div>
+
 
         <div class="all-products">
 
@@ -54,7 +60,7 @@ include 'functions.php';
             <div style="margin-bottom: 50px">
                 <div class="categ">
                     <div class="cat-name">Vegetables</div>
-                    <div class="desc">N PRODUCTS</div>
+                    <div class="desc"><?php countProducts($conn, 'VEGETABLES'); ?> PRODUCTS</div>
                 </div>
                 <?php getCatalog($conn, $category = "VEGETABLES"); ?>
             </div>
@@ -63,7 +69,7 @@ include 'functions.php';
             <div style="margin-bottom: 50px">
                 <div class="categ">
                     <div class="cat-name">Fruits</div>
-                    <div class="desc">N PRODUCTS</div>
+                    <div class="desc"><?php countProducts($conn, 'FRUITS'); ?> PRODUCTS</div>
                 </div>
                 <?php getCatalog($conn, $category = "FRUITS"); ?>
             </div>
@@ -72,7 +78,7 @@ include 'functions.php';
             <div style="margin-bottom: 50px">
                 <div class="categ">
                     <div class="cat-name">Grains</div>
-                    <div class="desc">N PRODUCTS</div>
+                    <div class="desc"><?php countProducts($conn, 'GRAINS'); ?> PRODUCTS</div>
                 </div>
                 <?php getCatalog($conn, $category = "GRAINS"); ?>
             </div>
@@ -80,22 +86,15 @@ include 'functions.php';
             <!-- herbs -->
             <div style="margin-bottom: 50px">
                 <div class="categ">
-                    <div class="cat-name">Herbs</div>
-                    <div class="desc">N PRODUCTS</div>
+                    <div class="cat-name">Herbs and Spices</div>
+                    <div class="desc"><?php countProducts($conn, 'HERBS AND SPICES'); ?> PRODUCTS</div>
                 </div>
                 <?php getCatalog($conn, $category = "HERBS AND SPICES"); ?>
             </div>
         </div>
     </div>
     <div style="margin-top: 150px;"></div>
-    <!-- FOOTER -->
-    <footer class="footer navbar-fixed-bottom">
-        <p>Developed by </p>
-        <p><a href="https://www.facebook.com/libby.hermo" target="_blank">Libby Marowen D. Hermo</a></p>
-        <p>and </p>
-        <p><a href="https://www.facebook.com/cristine.albisocomajes.3" target="_blank">Ma. Cristine Joy
-                Comajes</a></p>
-    </footer>
+
 </body>
 
 <script>

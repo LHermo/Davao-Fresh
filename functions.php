@@ -82,6 +82,12 @@ function getCatalog($conn, $category)
         $counter++;
     endwhile;
 
-    // close the final row div
     echo '</div>';
+}
+function countProducts($conn, $category)
+{
+    $stmt = $conn->prepare("SELECT COUNT(prd_cat) FROM ProductTbl WHERE prd_cat = '$category'");
+    $stmt->execute();
+    $data = $stmt->fetchColumn();
+    echo $data;
 }
