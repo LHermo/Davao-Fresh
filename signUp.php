@@ -1,5 +1,35 @@
+<?php
+include 'conn.php';
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $name = $_POST["name"];
+    $email = $_POST["email"];
+    $address = $_POST["address"];
+    $city = $_POST["city"];
+    $zip = $_POST["zip"];
+    $phone = $_POST["phone"];
+    $password = $_POST["password"];
+    $confirmpass = $_POST["confirm-pass"];
+
+
+    $stmt = $conn->prepare("INSERT INTO AccountTbl (acc_name, acc_email, acc_pwd, acc_addr, acc_city, acc_zip, acc_phone, acc_role, acc_status) VALUES (:name, :email, :password, :address, :city, :zip, :phone, 'customer','active')");
+    $stmt->bindParam(":name", $name);
+    $stmt->bindParam(":email", $email);
+    $stmt->bindParam(":address", $address);
+    $stmt->bindParam(":city", $city);
+    $stmt->bindParam(":zip", $zip);
+    $stmt->bindParam(":phone", $phone);
+    $stmt->bindParam(":password", $password);
+
+    $stmt->execute();
+
+    header("Location: home.php");
+    exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,110 +40,67 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;700;900&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <title>About DavaoFresh</title>
+    <title>Create an account</title>
 </head>
+<style>
+    @media (min-width: 1025px) {
+        .h-custom {
+            height: 100vh !important;
+        }
+    }
+</style>
+
 <body>
-    <section class="h-100" style="background: url(assets/cabbage-bg.png); font-family: 'Montserrat', sans-serif;">
-        <div class="container py-5 h-100">
+    <section class="h-100 h-custom" style="background: url('assets/cabbage-bg.png')">
+        <div class="container py-4 h-100">
             <div class="row d-flex justify-content-center align-items-center h-100">
-                <div class="col-12">
-                    <div class="card card-registration card-registration-2" style="border-radius: 15px;">
-                        <div class="card-body p-0">
-                            <div class="row g-0">
+                <div class="col-lg-8 col-xl-6">
+                    <div class="card rounded-3">
 
-                                <!-- LEFT PANEL -->
-                                <div class="col-lg-6">
-                                    <div class="p-5">
-                                        <h3 class="fw-normal mb-5" style="color: #1b1b1b; font-weight: 700;">Create a DavaoFresh Account</h3>
-                                        
-                                        <!-- EMAIL TEXTFIELD -->
-                                        <div class="row">
-                                            <div class="mb-4 pb-2">
-                                                <div class="form-outline">
-                                                <input type="text" id="form3Examplev4" class="form-control form-control-lg" />
-                                                <label class="form-label" for="form3Examplev4">Email</label>
-                                                </div>
-                                            </div>
-                                        </div>
+                        <!-- <img src="assets/signup-hero.png" style="border-top-left-radius: .3rem; border-top-right-radius: .3rem; height: auto; width: 600px;" alt="Sample photo"> -->
+                        <div class="card-body p-4 p-md-5">
+                            <form method="POST" onsubmit="return validateForm()" class="px-md-2">
+                                <h4 class="pb-2">Create an account</h4>
+                                <div class="form-outline mb-4">
+                                    <input type="text" name="name" id="name" class="form-control" required />
+                                    <label class="form-label" for="name">Name</label>
 
-                                        <!-- PASSWORD TEXTFIELD -->
-                                        <div class="row">
-                                            <div class="mb-4 pb-2">
-                                                <!-- Password -->
-                                                <div class="form-outline">
-                                                    <input type="password" id="form3Examplev4" class="form-control form-control-lg" />
-                                                    <label class="form-label" for="form3Examplev4">Password</label>
-                                                </div>
-                                                <!-- Confirm Password -->
-                                                <div class="form-outline">
-                                                    <input type="password" id="form3Examplev4" class="form-control form-control-lg" />
-                                                    <label class="form-label" for="form3Examplev4">Confirm Password</label>
-                                                </div>
-                                            </div>
-                                        </div>
+                                    <input type="text" name="email" id="email" class="form-control" required />
+                                    <label class="form-label" for="form3Example1q">Email</label>
+                                </div>
+
+                                <div class="row">
+                                    <div>
+                                        <textarea name="address" id="address" class="form-control" rows="2" required></textarea>
+                                        <label class="form-label" for="address">Address</label>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <input type="text" name="city" id="city" class="form-control" required />
+                                        <label class="form-label" for="city">City</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="number" name="zip" id="zip" class="form-control" required />
+                                        <label class="form-label" for="zip">Zip</label>
+                                    </div>
+                                    <div class="mb-4">
+                                        <input type="number" name="phone" id="phone" class="form-control" required />
+                                        <label class="form-label" for="phone">Phone</label>
                                     </div>
                                 </div>
 
-                                <!-- RIGHT PANEL -->
-                                <div class="col-lg-6 bg text-white">
-                                    <div class="p-5">
-                                    <h3 class="fw-normal mb-5">Contact Details</h3>
-                                    
-                                    <div class="row">
-                                        <div class="col-md-6 mb-4 pb-2">
-                                            <!-- First Name -->
-                                            <div class="form-outline">
-                                                <input type="text" id="form3Examplev2" class="form-control form-control-lg" />
-                                                <label class="form-label" for="form3Examplev2">First name</label>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 mb-4 pb-2">
-                                            <!-- Last Name -->
-                                            <div class="form-outline">
-                                                <input type="text" id="form3Examplev3" class="form-control form-control-lg" />
-                                                <label class="form-label" for="form3Examplev3">Last name</label>
-                                            </div>
-                                        </div>
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <input type="password" name="password" id="password" class="form-control" required />
+                                        <label class="form-label" for="password">Password</label>
                                     </div>
-
-                                    <div class="mb-4 pb-2">
-                                        <!-- Phone Number -->
-                                        <div class="form-outline form-white">
-                                            <input type="text" id="form3Examplea2" class="form-control form-control-lg" />
-                                            <label class="form-label" for="form3Examplea2">Phone Number</label>
-                                        </div>
-                                    </div>
-                                    <div class="mb-4 pb-2">
-                                        <!-- Address -->
-                                        <div class="form-outline form-white">
-                                            <input type="text" id="form3Examplea2" class="form-control form-control-lg" />
-                                            <label class="form-label" for="form3Examplea2">Address</label>
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-md-5 mb-4 pb-2">
-                                            <!-- Zip Code -->
-                                            <div class="form-outline form-white">
-                                                <input type="text" id="form3Examplea4" class="form-control form-control-lg" />
-                                                <label class="form-label" for="form3Examplea4">Zip Code</label>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-7 mb-4 pb-2">
-                                            <!-- City -->
-                                            <div class="form-outline form-white">
-                                                <input type="text" id="form3Examplea5" class="form-control form-control-lg" />
-                                                <label class="form-label" for="form3Examplea5">City</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- Register Button -->
-                                    <button type="button" class="btn btn-dark btn-lg rounded-pill" data-mdb-ripple-color="dark" style="padding-left: 30px; padding-right: 30px; margin-right: 10px;">Register</button>
-                                    <!-- Reset Button -->
-                                    <button type="button" class="btn btn-light btn-lg rounded-pill" data-mdb-ripple-color="dark" style="padding-left: 30px; padding-right: 30px;">Reset</button>
+                                    <div class="col-md-6">
+                                        <input type="password" name="confirm-pass" id="confirm-pass" class="form-control" required />
+                                        <label class="form-label" for="confirm-pass">Confirm Password</label>
                                     </div>
                                 </div>
-                            </div>
+                                <button type="submit" class="btn btn-success btn-lg float-end">Submit</button>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -121,4 +108,17 @@
         </div>
     </section>
 </body>
+<script>
+    function validateForm() {
+        var password = document.getElementById("password").value;
+        var confirmPass = document.getElementById("confirm-pass").value;
+
+        if (password != confirmPass) {
+            alert("The password fields must match.");
+            return false;
+        }
+        return true;
+    }
+</script>
+
 </html>

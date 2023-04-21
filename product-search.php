@@ -54,7 +54,7 @@ $stmt->execute();
         <!-- Main Content -->
         <div class="products-hero">
             <div class="search-div" style="margin-bottom: 50px;">
-                <form method="GET" action="testtt.php">
+                <form method="GET" action="product-search.php">
                     <input class="search-bar" type="text" name="query" placeholder="Search products (e.g. Romaine Lettuce)">
                 </form>
             </div>

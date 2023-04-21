@@ -48,7 +48,7 @@ include 'functions.php';
             <input class="search-bar" type="text" name="" placeholder="Search products (e.g. Brussel Sprouts)">
         </div> -->
         <div class="search-div">
-            <form method="GET" action="testtt.php">
+            <form method="GET" action="product-search.php">
                 <input class="search-bar" type="text" name="query" placeholder="Search products (e.g. Brussel Sprouts)">
             </form>
         </div>
