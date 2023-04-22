@@ -27,7 +27,7 @@
         <!-- Si Logout -->
         <ul class="nav nav=pills flex-column w-100">
             <li class="text-align-middle change-when-hovered">
-                <a href="login.php" class="nav-link px-2 d-flex align-items-center">
+                <a href="logout.php" class="nav-link px-2 d-flex align-items-center">
                     <i class="material-icons text-white">logout</i><span class="ms-1 d-none d-sm-inline text-white" style="padding-left: 10px;">Logout</span>
                 </a>
             </li>

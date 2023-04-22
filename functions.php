@@ -1,4 +1,8 @@
 <?php
+error_reporting(E_ALL ^ E_NOTICE);
+
+session_start();
+
 include 'conn.php';
 
 $searchTerm = '';
@@ -75,7 +79,7 @@ function getCatalog($conn, $category)
                     <input class="quantity-input" type="text" min="0" value="0">
                     <button class="plus-btn">+</button>
                 </div>
-                <button class="button-products">Add to basket</button>
+                <button class="button-products" onclick="addToBasket()">Add to basket</button>
             </div>
         </div>
 <?php
@@ -91,3 +95,18 @@ function countProducts($conn, $category)
     $data = $stmt->fetchColumn();
     echo $data;
 }
+
+?>
+<script>
+    function addToBasket() {
+        // Check if user is logged in
+        var isLoggedIn = "<?php echo isset($_SESSION['email']) ? 'true' : 'false' ?>";
+        if (isLoggedIn === 'true') {
+            // User is logged in, add product to basket
+            // TODO: add product to basket
+        } else {
+            // User is not logged in, redirect to sign up page
+            window.location.href = "signUp.php";
+        }
+    }
+</script>

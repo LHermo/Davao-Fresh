@@ -1,7 +1,17 @@
 <?php
-// session_start();
+session_start();
 require_once('conn.php');
 
+function getDataBySession($column, $conn, $sessionVar)
+{
+    $sessionVar = $_SESSION['email'];
+    $stmt = $conn->prepare("SELECT $column FROM AccountTbl WHERE acc_email=:email");
+    $stmt->bindParam(':email', $sessionVar);
+    $stmt->execute();
+    $data = $stmt->fetchColumn();
+    echo $data;
+}
+// pagkuha sa iD ni user ra ni
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -17,7 +27,6 @@ require_once('conn.php');
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;700;900&display=swap" rel="stylesheet">
-
     <title>Davao Fresh</title>
 </head>
 
@@ -30,12 +39,27 @@ require_once('conn.php');
                 <li class="active"><a href="home.php"> Home </a></li>
                 <li><a href="products.php"> Products </a></li>
                 <li><a href="about.php"> About Us</a></li>
+
+                <?php if (isset($_SESSION['email'])) : ?>
+                    <li style="padding-left: 200px;"> Welcome,
+                        <?php
+                        $email = $_SESSION['email'];
+                        getDataBySession('acc_name', $conn, $email);
+                        ?>
+                    </li>
+                    <?php echo "</ul>" ?>
+                    <ul>
+                        <li><a href="basket.php"><img class="icon" src="assets/shopping-basket.svg" alt="Shopping Basket"></a></li>
+                        <li><a href="logout.php"><img class="icon" src="assets/logout-icon.svg"></a></li>
+                    </ul>
+                <?php else : ?>
+                    <!-- <li><a href="login.php">Login</a></li> -->
             </ul>
             <ul>
-                <li><a href="basket.php"><img class="icon" src="assets/shopping-basket.svg" alt="Shopping Basket"></a>
-                </li>
+                <li><a href="basket.php"><img class="icon" src="assets/shopping-basket.svg" alt="Shopping Basket"></a></li>
                 <li><a href="login.php"><img class="icon" src="assets/user.svg" alt="Login"></a></li>
             </ul>
+        <?php endif; ?>
         </nav>
 
         <!-- THE CONTENT -->
@@ -113,6 +137,27 @@ require_once('conn.php');
         }
         x[myIndex - 1].style.display = "block";
     }
+    // Get the dropdown button and content
+    var dropdownBtn = document.querySelector(".dropdown-btn");
+    var dropdownContent = document.querySelector(".dropdown-content");
+
+    // Toggle the dropdown content when the button is clicked
+    dropdownBtn.addEventListener("click", function() {
+        dropdownContent.classList.toggle("show");
+    });
+
+    // Close the dropdown content when the user clicks outside of it
+    window.addEventListener("click", function(event) {
+        if (!event.target.matches(".dropdown-btn")) {
+            var dropdowns = document.getElementsByClassName("dropdown-content");
+            for (var i = 0; i < dropdowns.length; i++) {
+                var dropdown = dropdowns[i];
+                if (dropdown.classList.contains("show")) {
+                    dropdown.classList.remove("show");
+                }
+            }
+        }
+    });
 </script>
 
 </html>

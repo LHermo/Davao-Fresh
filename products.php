@@ -1,4 +1,5 @@
 <?php
+session_start();
 include 'conn.php';
 include 'functions.php';
 ?>
@@ -43,10 +44,10 @@ include 'functions.php';
             <h1>Explore our products</h1>
             <p>Search through our catalog of fruits and vegetables <br>
                 locally sourced from Davao farmers</p>
+            <p><?php
+                echo $_SESSION['email']; ?></p>
         </div>
-        <!-- <div class="search-div">
-            <input class="search-bar" type="text" name="" placeholder="Search products (e.g. Brussel Sprouts)">
-        </div> -->
+        <!-- SEARCHBAR -->
         <div class="search-div">
             <form method="GET" action="product-search.php">
                 <input class="search-bar" type="text" name="query" placeholder="Search products (e.g. Brussel Sprouts)">
@@ -55,7 +56,6 @@ include 'functions.php';
 
 
         <div class="all-products">
-
             <!-- vegetables -->
             <div style="margin-bottom: 50px">
                 <div class="categ">
