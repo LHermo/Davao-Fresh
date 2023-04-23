@@ -1,8 +1,6 @@
 <?php
 error_reporting(E_ALL ^ E_NOTICE);
-
 session_start();
-
 include 'conn.php';
 
 $searchTerm = '';
@@ -95,17 +93,24 @@ function countProducts($conn, $category)
     $data = $stmt->fetchColumn();
     echo $data;
 }
+function getDataBySession($column, $conn, $sessionVar)
+{
+    $sessionVar = $_SESSION['email'];
+    $stmt = $conn->prepare("SELECT $column FROM AccountTbl WHERE acc_email=:email");
+    $stmt->bindParam(':email', $sessionVar);
+    $stmt->execute();
+    $data = $stmt->fetchColumn();
+    echo $data;
+}
 
 ?>
 <script>
     function addToBasket() {
-        // Check if user is logged in
         var isLoggedIn = "<?php echo isset($_SESSION['email']) ? 'true' : 'false' ?>";
         if (isLoggedIn === 'true') {
             // User is logged in, add product to basket
             // TODO: add product to basket
         } else {
-            // User is not logged in, redirect to sign up page
             window.location.href = "signUp.php";
         }
     }

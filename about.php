@@ -26,11 +26,28 @@
                 <li><a href="products.php"> Products </a></li>
                 <li class="active"><a href="about.php"> About Us</a></li>
             </ul>
-            <ul>
-                <li><a href="basket.php"><img class="icon" src="assets/shopping-basket.svg" alt="Shopping Basket"></a>
-                </li>
+            <?php if (isset($_SESSION['email'])) : ?>
+                <select id="home-dropdown" style="height: 24px; border: none; font-size: 1rem; outline: none;">
+                    <option value="" selected disabled hidden>
+                        <?php
+                        $email = $_SESSION['email'];
+                        getDataBySession('acc_name', $conn, $email);
+                        ?></option>
+                    <option value="basket">My Basket</option>
+                    <option value="history">Order History</option>
+                    <option value="settings">Settings</option>
+                    <option value="logout">Logout</option>
+                </select>
+                <?php echo "</ul>" ?>
+            <?php else : ?>
+                <ul>
+                    <li><a href="login.php">Login</a></li>
+                </ul>
+            <?php endif; ?>
+            <!-- <ul>
+                <li><a href="basket.php"><img class="icon" src="assets/shopping-basket.svg" alt="Shopping Basket"></a></li>
                 <li><a href="login.php"><img class="icon" src="assets/user.svg" alt="Login"></a></li>
-            </ul>
+            </ul> -->
         </nav>
 
         <!-- MAIN CONTENT -->

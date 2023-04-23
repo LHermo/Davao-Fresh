@@ -32,11 +32,24 @@ include 'functions.php';
                 <li class="active"><a href="products.php"> Products </a></li>
                 <li><a href="about.php"> About Us</a></li>
             </ul>
-            <ul>
-                <li><a href="basket.php"><img class="icon" src="assets/shopping-basket.svg" alt="Shopping Basket"></a>
-                </li>
-                <li><a href="login.php"><img class="icon" src="assets/user.svg" alt="Login"></a></li>
-            </ul>
+            <?php if (isset($_SESSION['email'])) : ?>
+                <select id="home-dropdown" style="height: 24px; border: none; font-size: 1rem; outline: none;">
+                    <option value="" selected disabled hidden>
+                        <?php
+                        $email = $_SESSION['email'];
+                        getDataBySession('acc_name', $conn, $email);
+                        ?></option>
+                    <option value="basket">My Basket</option>
+                    <option value="history">Order History</option>
+                    <option value="settings">Settings</option>
+                    <option value="logout">Logout</option>
+                </select>
+                <?php echo "</ul>" ?>
+            <?php else : ?>
+                <ul>
+                    <li><a href="login.php">Login</a></li>
+                </ul>
+            <?php endif; ?>
         </nav>
 
         <!-- MAIN CONTENT -->
@@ -44,8 +57,6 @@ include 'functions.php';
             <h1>Explore our products</h1>
             <p>Search through our catalog of fruits and vegetables <br>
                 locally sourced from Davao farmers</p>
-            <p><?php
-                echo $_SESSION['email']; ?></p>
         </div>
         <!-- SEARCHBAR -->
         <div class="search-div">
@@ -137,6 +148,17 @@ include 'functions.php';
 
     plusBtn.addEventListener("click", function() {
         quantityInput.value++;
+    });
+
+    // sa home dropdown ni
+    const selectElement = document.querySelector('#home-dropdown');
+    selectElement.addEventListener('change', (event) => {
+        const selectedValue = event.target.value;
+        if (selectedValue === 'logout') {
+            window.location.href = 'logout.php';
+        } else if (selectedValue === 'basket') {
+            window.location.href = 'basket.php';
+        }
     });
 </script>
 
