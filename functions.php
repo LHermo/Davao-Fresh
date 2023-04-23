@@ -73,9 +73,9 @@ function getCatalog($conn, $category)
                     <p class="name"><?php echo $row['prd_name'] ?></p>
                 </div>
                 <div class="quantity-selector">
-                    <button class="minus-btn">-</button>
-                    <input class="quantity-input" type="text" min="0" value="0">
-                    <button class="plus-btn">+</button>
+                    <button class="minus-btn" name="minus-btn" id="minus-btn">-</button>
+                    <input class="quantity-input" type="number" min="0" placeholder="0" onfocus="this.placeholder=''" onblur="if (this.value == '') {this.placeholder = ':(';}">
+                    <button class="plus-btn" name="plus-btn" id="plus-btn">+</button>
                 </div>
                 <button class="button-products" onclick="addToBasket()">Add to basket</button>
             </div>
@@ -110,6 +110,7 @@ function getDataBySession($column, $conn, $sessionVar)
         if (isLoggedIn === 'true') {
             // User is logged in, add product to basket
             // TODO: add product to basket
+
         } else {
             window.location.href = "signUp.php";
         }

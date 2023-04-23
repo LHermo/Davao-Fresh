@@ -237,6 +237,18 @@ footer a {
     margin-bottom: 17px;
 }
 
+/* Hide the up and down buttons for number inputs */
+.quantity-input::-webkit-outer-spin-button,
+.quantity-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Remove the default styling for number inputs */
+.quantity-input {
+    -moz-appearance: textfield;
+}
+
 .quantity-input {
     width: 48px;
     height: 20px;

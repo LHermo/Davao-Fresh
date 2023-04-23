@@ -18,7 +18,6 @@ include 'functions.php';
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;700;900&display=swap" rel="stylesheet">
-
     <title>Davao Fresh</title>
 </head>
 
@@ -87,21 +86,6 @@ include 'functions.php';
 </body>
 
 <script>
-    // Sa quantity-selectors ni
-    var minusBtn = document.querySelector(".minus-btn");
-    var plusBtn = document.querySelector(".plus-btn");
-    var quantityInput = document.querySelector(".quantity-input");
-
-    minusBtn.addEventListener("click", function() {
-        if (quantityInput.value > 0) {
-            quantityInput.value--;
-        }
-    });
-
-    plusBtn.addEventListener("click", function() {
-        quantityInput.value++;
-    });
-
     // sa home dropdown ni
     const selectElement = document.querySelector('#home-dropdown');
     selectElement.addEventListener('change', (event) => {
