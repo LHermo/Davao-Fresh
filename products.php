@@ -2,6 +2,14 @@
 session_start();
 include 'conn.php';
 include 'functions.php';
+
+// ADD TO BASKET CHECKER
+if (isset($_POST['add_to_basket'])) {
+    $product_id = $_POST['product_id'];
+    $quantity = $_POST['quantity'];
+
+    $_SESSION['basket'][$product_id] = $quantity;
+}
 ?>
 
 <!DOCTYPE html>
@@ -18,6 +26,7 @@ include 'functions.php';
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;700;900&display=swap" rel="stylesheet">
+
     <title>Davao Fresh</title>
 </head>
 

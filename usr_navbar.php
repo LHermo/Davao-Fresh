@@ -45,7 +45,6 @@
             <option value="settings">Settings</option>
             <option value="logout">Logout</option>
         </select>
-        <?php echo "</ul>" ?>
     <?php else : ?>
         <ul>
             <li><a href="login.php">Login</a></li>

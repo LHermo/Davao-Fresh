@@ -4,8 +4,8 @@ session_start();
 include 'conn.php';
 
 $searchTerm = '';
-if (isset($_POST['search'])) { // Check if the search form has been submitted
-    $searchTerm = $_POST['searchTerm']; // Set the $searchTerm variable to the submitted value
+if (isset($_POST['search'])) {
+    $searchTerm = $_POST['searchTerm'];
 }
 
 function searchOrders($conn, $tableFunction, $query)
@@ -46,7 +46,22 @@ function displayTable($conn, $tableFunction, $tableName, $query)
         $tableFunction($conn, "SELECT * FROM $tableName");
     }
 }
-
+function countProducts($conn, $category)
+{
+    $stmt = $conn->prepare("SELECT COUNT(prd_cat) FROM ProductTbl WHERE prd_cat = '$category'");
+    $stmt->execute();
+    $data = $stmt->fetchColumn();
+    echo $data;
+}
+function getDataBySession($column, $conn, $sessionVar)
+{
+    $sessionVar = $_SESSION['email'];
+    $stmt = $conn->prepare("SELECT $column FROM AccountTbl WHERE acc_email=:email");
+    $stmt->bindParam(':email', $sessionVar);
+    $stmt->execute();
+    $data = $stmt->fetchColumn();
+    echo $data;
+}
 function getCatalog($conn, $category)
 {
     $stmt = $conn->prepare("SELECT * FROM ProductTbl WHERE prd_cat = '$category'");
@@ -72,12 +87,13 @@ function getCatalog($conn, $category)
                     <p class="category"><?php echo $row['prd_cat'] ?></p>
                     <p class="name"><?php echo $row['prd_name'] ?></p>
                 </div>
+                <!-- This with the placeholder thang -->
                 <div class="quantity-selector">
-                    <button class="minus-btn" name="minus-btn" id="minus-btn">-</button>
-                    <input class="quantity-input" type="number" min="0" placeholder="0" onfocus="this.placeholder=''" onblur="if (this.value == '') {this.placeholder = ':(';}">
-                    <button class="plus-btn" name="plus-btn" id="plus-btn">+</button>
+                    <button class="plus-btn" onclick="decrement(<?php echo $row['prd_id'] ?>)">-</button>
+                    <input class="quantity-input" type="number" id="quantity-input-<?php echo $row['prd_id'] ?>" min="0" value="0">
+                    <button class="minus-btn" onclick="increment(<?php echo $row['prd_id'] ?>)">+</button>
                 </div>
-                <button class="button-products" onclick="addToBasket()">Add to basket</button>
+                <button class="button-products" type="button" name="add_to_basket" onclick="addToCart(<?php echo $row['prd_id'] ?>)">Add to Basket</button>
             </div>
         </div>
 <?php
@@ -86,33 +102,53 @@ function getCatalog($conn, $category)
 
     echo '</div>';
 }
-function countProducts($conn, $category)
-{
-    $stmt = $conn->prepare("SELECT COUNT(prd_cat) FROM ProductTbl WHERE prd_cat = '$category'");
-    $stmt->execute();
-    $data = $stmt->fetchColumn();
-    echo $data;
-}
-function getDataBySession($column, $conn, $sessionVar)
-{
-    $sessionVar = $_SESSION['email'];
-    $stmt = $conn->prepare("SELECT $column FROM AccountTbl WHERE acc_email=:email");
-    $stmt->bindParam(':email', $sessionVar);
-    $stmt->execute();
-    $data = $stmt->fetchColumn();
-    echo $data;
-}
-
 ?>
 <script>
-    function addToBasket() {
-        var isLoggedIn = "<?php echo isset($_SESSION['email']) ? 'true' : 'false' ?>";
-        if (isLoggedIn === 'true') {
-            // User is logged in, add product to basket
-            // TODO: add product to basket
+    // function addToCart(productId) {
+    //     var quantity = document.getElementById("quantity-input-" + productId).value;
+    //     var xhr = new XMLHttpRequest();
+    //     xhr.open("POST", "add_to_cart.php", true);
+    //     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    //     xhr.onreadystatechange = function() {
+    //         if (xhr.readyState === 4 && xhr.status === 200) {
+    //             alert("Product successfully added!");
+    //         }
+    //     };
+    //     xhr.send("productId=" + productId + "&quantity=" + quantity);
+    // }
+    function addToCart(productId) {
+        var quantity = document.getElementById("quantity-input-" + productId).value;
 
-        } else {
-            window.location.href = "signUp.php";
+        // Check if the user is logged in
+        var isLoggedIn = <?php echo isset($_SESSION['email']) && $_SESSION['email'] ? 'true' : 'false'; ?>;
+        if (!isLoggedIn) {
+            alert("Please log in to add products to your cart.");
+            return;
+        }
+
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "add_to_cart.php", true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                alert("Product successfully added!");
+            }
+        };
+        xhr.send("productId=" + productId + "&quantity=" + quantity);
+    }
+
+
+    function increment(index) {
+        var inputField = document.getElementById("quantity-input-" + index);
+        var value = parseInt(inputField.value);
+        inputField.value = value + 1;
+    }
+
+    function decrement(index) {
+        var inputField = document.getElementById("quantity-input-" + index);
+        var value = parseInt(inputField.value);
+        if (inputField.value != 0) {
+            inputField.value = value - 1;
         }
     }
 </script>
