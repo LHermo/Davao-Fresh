@@ -52,8 +52,9 @@
     </div>
 </body>
 
+</html>
 <script>
-    // Sa Navbar animations ni
+    // navbar animations
     window.addEventListener('scroll', function() {
         var navbar = document.querySelector('nav');
         if (window.pageYOffset > 0) {
@@ -79,5 +80,3 @@
         }
     }
 </script>
-
-</html>

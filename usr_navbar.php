@@ -1,3 +1,30 @@
+<script>
+    // navbar animations
+    window.addEventListener('scroll', function() {
+        var navbar = document.querySelector('nav');
+        if (window.pageYOffset > 0) {
+            navbar.classList.add('nav-shadow');
+        } else {
+            navbar.classList.remove('nav-shadow');
+        }
+    });
+
+    window.onscroll = function() {
+        scrollFunction()
+    };
+
+    function scrollFunction() {
+        if (document.body.scrollTop > 60 || document.documentElement.scrollTop > 60) {
+            document.querySelector("nav").style.padding = "1% 10%";
+            document.querySelector("nav").style.height = "50px";
+            document.querySelector("nav").style.transition = "all 0.3s ease-in-out";
+        } else {
+            document.querySelector("nav").style.padding = "2% 10%";
+            document.querySelector("nav").style.height = "60px";
+            document.querySelector("nav").style.transition = "all 0.3s ease-in-out";
+        }
+    }
+</script>
 <nav class="nav">
     <img class="logo" src="assets/LOGO - Davao Fresh.svg"></img>
     <ul style="display: inline-block;">
@@ -27,6 +54,7 @@
 </nav>
 
 <script>
+    // home dropdown
     const selectElement = document.querySelector('#home-dropdown');
     selectElement.addEventListener('change', (event) => {
         const selectedValue = event.target.value;

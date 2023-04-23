@@ -71,43 +71,6 @@ function getDataBySession($column, $conn, $sessionVar)
 </body>
 
 <script>
-    // sa home dropdown ni
-    // const selectElement = document.querySelector('#home-dropdown');
-    // selectElement.addEventListener('change', (event) => {
-    //     const selectedValue = event.target.value;
-    //     if (selectedValue === 'logout') {
-    //         window.location.href = 'logout.php';
-    //     } else if (selectedValue === 'basket') {
-    //         window.location.href = 'basket.php';
-    //     }
-    // });
-
-    // Sa Navbar animations ni
-    window.addEventListener('scroll', function() {
-        var navbar = document.querySelector('nav');
-        if (window.pageYOffset > 0) {
-            navbar.classList.add('nav-shadow');
-        } else {
-            navbar.classList.remove('nav-shadow');
-        }
-    });
-
-    window.onscroll = function() {
-        scrollFunction()
-    };
-
-    function scrollFunction() {
-        if (document.body.scrollTop > 60 || document.documentElement.scrollTop > 60) {
-            document.querySelector("nav").style.padding = "1% 10%";
-            document.querySelector("nav").style.height = "50px";
-            document.querySelector("nav").style.transition = "all 0.3s ease-in-out";
-        } else {
-            document.querySelector("nav").style.padding = "2% 10%";
-            document.querySelector("nav").style.height = "60px";
-            document.querySelector("nav").style.transition = "all 0.3s ease-in-out";
-        }
-    }
-
     // Sa Banana Animations ni 
     var myIndex = 0;
     carousel();
@@ -124,27 +87,6 @@ function getDataBySession($column, $conn, $sessionVar)
         }
         x[myIndex - 1].style.display = "block";
     }
-    // Get the dropdown button and content
-    var dropdownBtn = document.querySelector(".dropdown-btn");
-    var dropdownContent = document.querySelector(".dropdown-content");
-
-    // Toggle the dropdown content when the button is clicked
-    dropdownBtn.addEventListener("click", function() {
-        dropdownContent.classList.toggle("show");
-    });
-
-    // Close the dropdown content when the user clicks outside of it
-    window.addEventListener("click", function(event) {
-        if (!event.target.matches(".dropdown-btn")) {
-            var dropdowns = document.getElementsByClassName("dropdown-content");
-            for (var i = 0; i < dropdowns.length; i++) {
-                var dropdown = dropdowns[i];
-                if (dropdown.classList.contains("show")) {
-                    dropdown.classList.remove("show");
-                }
-            }
-        }
-    });
 </script>
 
 </html>
