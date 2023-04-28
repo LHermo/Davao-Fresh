@@ -38,32 +38,10 @@ $stmt->execute();
 <body>
     <div class="main-content">
         <!-- NAVIGATION BAR -->
-        <nav class="nav">
-            <img class="logo" src="assets/LOGO - Davao Fresh.svg"></img>
-            <ul style="display: inline-block;">
-                <li><a href="home.php"> Home </a></li>
-                <li class="active"><a href="products.php"> Products </a></li>
-                <li><a href="about.php"> About Us</a></li>
-            </ul>
-            <?php if (isset($_SESSION['email'])) : ?>
-                <select id="home-dropdown" style="height: 24px; border: none; font-size: 1rem; outline: none;">
-                    <option value="" selected disabled hidden>
-                        <?php
-                        $email = $_SESSION['email'];
-                        getDataBySession('acc_name', $conn, $email);
-                        ?></option>
-                    <option value="basket">My Basket</option>
-                    <option value="history">Order History</option>
-                    <option value="settings">Settings</option>
-                    <option value="logout">Logout</option>
-                </select>
-                <?php echo "</ul>" ?>
-            <?php else : ?>
-                <ul>
-                    <li><a href="login.php">Login</a></li>
-                </ul>
-            <?php endif; ?>
-        </nav>
+        <?php
+        $active_tab = 'products';
+        include 'usr_navbar.php';
+        ?>
 
         <!-- Main Content -->
         <div class="products-hero">

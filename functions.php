@@ -60,7 +60,7 @@ function getDataBySession($column, $conn, $sessionVar)
     $stmt->bindParam(':email', $sessionVar);
     $stmt->execute();
     $data = $stmt->fetchColumn();
-    echo $data;
+    return $data;
 }
 function getCatalog($conn, $category)
 {
@@ -104,18 +104,6 @@ function getCatalog($conn, $category)
 }
 ?>
 <script>
-    // function addToCart(productId) {
-    //     var quantity = document.getElementById("quantity-input-" + productId).value;
-    //     var xhr = new XMLHttpRequest();
-    //     xhr.open("POST", "add_to_cart.php", true);
-    //     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    //     xhr.onreadystatechange = function() {
-    //         if (xhr.readyState === 4 && xhr.status === 200) {
-    //             alert("Product successfully added!");
-    //         }
-    //     };
-    //     xhr.send("productId=" + productId + "&quantity=" + quantity);
-    // }
     function addToCart(productId) {
         var quantity = document.getElementById("quantity-input-" + productId).value;
 

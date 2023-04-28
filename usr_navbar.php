@@ -38,7 +38,8 @@
             <option value="" selected disabled hidden>
                 <?php
                 $email = $_SESSION['email'];
-                getDataBySession('acc_name', $conn, $email);
+                $name = getDataBySession('acc_name', $conn, $email);
+                echo $name;
                 ?></option>
             <option value="basket">My Basket</option>
             <option value="history">Order History</option>
