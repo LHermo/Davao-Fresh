@@ -1,7 +1,7 @@
 <script>
     // navbar animations
     window.addEventListener('scroll', function() {
-        var navbar = document.querySelector('nav');
+        var navbar = document.querySelector('navi');
         if (window.pageYOffset > 0) {
             navbar.classList.add('nav-shadow');
         } else {
@@ -25,7 +25,7 @@
         }
     }
 </script>
-<nav class="nav">
+<nav class="navi">
     <img class="logo" src="assets/LOGO - Davao Fresh.svg"></img>
     <ul style="display: inline-block;">
         <li class="<?php echo ($active_tab == 'home') ? 'active' : ''; ?>"><a href="home.php"> Home </a></li>
@@ -61,7 +61,8 @@
         if (selectedValue === 'logout') {
             window.location.href = 'logout.php';
         } else if (selectedValue === 'basket') {
-            window.location.href = 'basket.php';
+            // ayusa ni ibalik sa basket.php
+            window.location.href = 'sample.php';
         }
     });
 </script>
