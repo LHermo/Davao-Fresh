@@ -1,12 +1,10 @@
 <?php
-include 'conn.php';
+session_start();
+$product_id = $_POST['product_id'];
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id'])) {
-    $id = $_POST['id'];
-    $stmt = $conn->prepare("DELETE FROM ProductTbl WHERE prd_id = ?");
-    $stmt->execute([$id]);
-    header('Location: adm_products.php');
-    exit;
+if (isset($_SESSION['cart'][$product_id])) {
+    unset($_SESSION['cart'][$product_id]);
 }
 
-$conn = null;
+header("Location: basket.php");
+exit();

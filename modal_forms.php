@@ -92,7 +92,7 @@
                                 <option value="FRUITS">Fruits</option>
                                 <option value="VEGETABLES">Vegetables</option>
                                 <option value="GRAINS">Grains</option>
-                                <option value="HERBS & SPICES">Herbs & Spices</option>
+                                <option value="HERBS AND SPICES">Herbs & Spices</option>
                             </select>
                         </div>
                         <div class="form-group">

@@ -1,7 +1,7 @@
 <script>
     // navbar animations
     window.addEventListener('scroll', function() {
-        var navbar = document.querySelector('navi');
+        var navbar = document.querySelector('nav');
         if (window.pageYOffset > 0) {
             navbar.classList.add('nav-shadow');
         } else {
@@ -61,8 +61,7 @@
         if (selectedValue === 'logout') {
             window.location.href = 'logout.php';
         } else if (selectedValue === 'basket') {
-            // ayusa ni ibalik sa basket.php
-            window.location.href = 'sample.php';
+            window.location.href = 'basket.php';
         }
     });
 </script>
