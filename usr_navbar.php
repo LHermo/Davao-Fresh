@@ -25,12 +25,12 @@
         }
     }
 </script>
-<nav class="navi">
+<nav>
     <img class="logo" src="assets/LOGO - Davao Fresh.svg"></img>
     <ul style="display: inline-block;">
-        <li class="<?php echo ($active_tab == 'home') ? 'active' : ''; ?>"><a href="home.php"> Home </a></li>
-        <li class="<?php echo ($active_tab == 'products') ? 'active' : ''; ?>"><a href=" products.php"> Products </a></li>
-        <li class="<?php echo ($active_tab == 'about') ? 'active' : ''; ?>"><a href="about.php"> About Us</a></li>
+        <li class="<?php echo ($active_tab == 'home') ? 'active-tab' : ''; ?>"><a href="home.php"> Home </a></li>
+        <li class="<?php echo ($active_tab == 'products') ? 'active-tab' : ''; ?>"><a href=" products.php"> Products </a></li>
+        <li class="<?php echo ($active_tab == 'about') ? 'active-tab' : ''; ?>"><a href="about.php"> About Us</a></li>
 
     </ul>
     <?php if (isset($_SESSION['email'])) : ?>
