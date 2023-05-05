@@ -15,6 +15,15 @@ $stmt = $conn->prepare("SELECT *
     OR prd_unit LIKE '%$query%'");
 
 $stmt->execute();
+
+// ADD TO BASKET CHECKER
+if (isset($_POST['add_to_basket'])) {
+    $product_id = $_POST['product_id'];
+    $quantity = $_POST['quantity'];
+
+    $_SESSION['basket'][$product_id] = $quantity;
+}
+?>
 ?>
 
 <!DOCTYPE html>
@@ -81,11 +90,11 @@ $stmt->execute();
                                 <p class="name"><?php echo $row['prd_name'] ?></p>
                             </div>
                             <div class="quantity-selector">
-                                <button class="minus-btn">-</button>
-                                <input class="quantity-input" type="text" min="0" value="0">
-                                <button class="plus-btn">+</button>
+                                <button class="plus-btn" onclick="decrement(<?php echo $row['prd_id'] ?>)">-</button>
+                                <input class="quantity-input" type="number" id="quantity-input-<?php echo $row['prd_id'] ?>" min="0" value="0">
+                                <button class="minus-btn" onclick="increment(<?php echo $row['prd_id'] ?>)">+</button>
                             </div>
-                            <button class="button-products">Add to basket</button>
+                            <button class="button-products" type="button" name="add_to_basket" onclick="addToCart(<?php echo $row['prd_id'] ?>)">Add to Basket</button>
                         </div>
                     </div>
             <?php
@@ -99,48 +108,5 @@ $stmt->execute();
     </div>
     <div style="margin-top: 150px;"></div>
 </body>
-
-<script>
-    // Sa Navbar animations ni
-    window.addEventListener('scroll', function() {
-        var navbar = document.querySelector('nav');
-        if (window.pageYOffset > 0) {
-            navbar.classList.add('nav-shadow');
-        } else {
-            navbar.classList.remove('nav-shadow');
-        }
-    });
-
-    window.onscroll = function() {
-        scrollFunction()
-    };
-
-    function scrollFunction() {
-        if (document.body.scrollTop > 60 || document.documentElement.scrollTop > 60) {
-            document.querySelector("nav").style.padding = "1% 10%";
-            document.querySelector("nav").style.height = "50px";
-            document.querySelector("nav").style.transition = "all 0.3s ease-in-out";
-        } else {
-            document.querySelector("nav").style.padding = "2% 10%";
-            document.querySelector("nav").style.height = "60px";
-            document.querySelector("nav").style.transition = "all 0.3s ease-in-out";
-        }
-    }
-
-    // Sa quantity-selectors ni
-    var minusBtn = document.querySelector(".minus-btn");
-    var plusBtn = document.querySelector(".plus-btn");
-    var quantityInput = document.querySelector(".quantity-input");
-
-    minusBtn.addEventListener("click", function() {
-        if (quantityInput.value > 0) {
-            quantityInput.value--;
-        }
-    });
-
-    plusBtn.addEventListener("click", function() {
-        quantityInput.value++;
-    });
-</script>
 
 </html>

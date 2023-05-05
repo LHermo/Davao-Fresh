@@ -70,7 +70,9 @@ function getSubTotal($conn, $ordId)
             ?>
             <!-- Content na ni diri -->
             <div class="col-6 p-4 my-5 ml-5 mr-2 bg-white rounded">
-                <h3>Order #<?php getData($conn, $ordId, 'OrderTbl.ord_id') ?></h3>
+
+                <h3>Order #<?php getData($conn, $ordId, 'OrderTbl.ord_id') ?> <button type="button" class="btn btn-outline-secondary" onclick="goBack()" style="float: right;">Back to Orders</button>
+                </h3>
                 <hr>
                 <!-- Order table -->
                 <table class="table">
@@ -151,7 +153,6 @@ function getSubTotal($conn, $ordId)
 </body>
 <script>
     function updateStatus(newStatus, ordId) {
-        // Make an AJAX request to update the account status in the database
         $.ajax({
             url: "edit-order.php",
             method: "POST",
@@ -166,5 +167,9 @@ function getSubTotal($conn, $ordId)
                 alert("Error updating account status: " + error);
             }
         });
+    }
+
+    function goBack() {
+        window.history.back();
     }
 </script>

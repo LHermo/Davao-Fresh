@@ -149,20 +149,8 @@ $query = "SELECT OrderTbl.*, AccountTbl.acc_name
                                                 <td> <!-- Date -->
                                                     <p class="fw-bold mb-1"> <?php echo $row['ord_dt']; ?></p>
                                                 </td>
-                                                <!-- <td> Actions -->
-                                                <!-- <div class="dropdown">
-                                                        <select name="status" onchange="updateStatus(this.value, <?php echo $row['ord_id']; ?>)">
-                                                            <option><?php echo $row['ord_status'] ?></option>
-                                                            <option value="Delivered">Delivered</option>
-                                                            <option value="Pending">Pending</option>
-                                                            <option value="On Process">On Process</option>
-                                                            <option value="Cancelled">Cancelled</option>
-                                                        </select>
-                                                    </div> -->
-                                                <!-- </td> -->
-
                                                 <td> <!-- Actions -->
-                                                    <form action="sample.php" method="POST">
+                                                    <form action="adm_order_details.php" method="POST">
                                                         <input type="hidden" name="id" value="<?php echo $row['ord_id']; ?>">
                                                         <button type="submit" name="view" class="btn btn-sm btn-outline-success px-4">View</button>
                                                     </form>

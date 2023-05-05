@@ -138,15 +138,21 @@ $query = "SELECT * FROM AccountTbl
                                                 <td> <!-- Phone -->
                                                     <p class="fw-bold mb-1"> <?php echo $row['acc_phone']; ?></p>
                                                 </td>
-                                                <td> <!-- Actions -->
-                                                    <div class="dropdown">
+                                                <td style="padding-inline: 0px;"> <!-- Actions -->
+                                                    <!-- <div class="dropdown">
                                                         <select name="status" onchange="updateStatus(this.value, <?php echo $row['acc_id']; ?>)">
                                                             <option value="active"><?php echo $row['acc_status'] ?></option>
                                                             <option value="active">Active</option>
                                                             <option value="inactive">Inactive</option>
                                                             <option value="blocked">Blocked</option>
                                                         </select>
-                                                    </div>
+                                                    </div> -->
+                                                    <select class="form-control" style="width: 110px;" name="status" onchange="updateStatus(this.value, <?php echo $row['acc_id']; ?>)">
+                                                        <option disabled selected><?php echo $row['acc_status'] ?></option>
+                                                        <option value="active">Active</option>
+                                                        <option value="inactive">Inactive</option>
+                                                        <option value="blocked">Blocked</option>
+                                                    </select>
 
                                                     <!-- <div class="dropdown">
                                                         <?php
@@ -184,63 +190,6 @@ $query = "SELECT * FROM AccountTbl
     </div>
 </body>
 <script>
-    // Sa dropdown sa edit status ni
-    const dropdownButton = document.getElementById('dropdownMenuButton');
-    const dropdownMenu = document.querySelector('.dropdown-menu');
-    const dropdownItems = dropdownMenu.querySelectorAll('.dropdown-item');
-
-    dropdownItems.forEach(item => {
-        item.addEventListener('click', () => {
-            dropdownButton.innerHTML = item.innerHTML;
-        });
-    });
-
-    $(document).ready(function() {
-        $('.dropdown-toggle').dropdown();
-
-        // Close dropdown when clicking outside of it
-        $(document).on('click', function(event) {
-            var $target = $(event.target);
-            if (!$target.closest('.dropdown').length) {
-                $('.dropdown-toggle').dropdown('hide');
-            }
-        });
-    });
-
-    // Para mu close dayun
-    $(document).ready(function() {
-        $(".dropdown-menu a").click(function() {
-            var selectedOption = $(this).text();
-            $(this).parents(".dropdown").find('.dropdown-toggle').html(selectedOption);
-            $(this).parents(".dropdown").find('.dropdown-toggle').addClass('selected-' + selectedOption.toLowerCase());
-            $(this).parents(".dropdown").find('.dropdown-toggle').dropdown('toggle');
-        });
-    });
-
-    // color change
-    const dropdown = document.querySelector('.dropdown');
-    const options = dropdown.querySelectorAll('.dropdown-menu .dropdown-item');
-
-    options.forEach((option) => {
-        option.addEventListener('click', function() {
-            const status = option.textContent;
-            const btn = dropdown.querySelector('.dropdown-toggle');
-
-            if (status === 'Active') {
-                btn.classList.remove('btn-secondary', 'btn-danger');
-                btn.classList.add('btn-success');
-            } else if (status === 'Inactive') {
-                btn.classList.remove('btn-success', 'btn-danger');
-                btn.classList.add('btn-secondary');
-            } else if (status === 'Blocked') {
-                btn.classList.remove('btn-success', 'btn-secondary');
-                btn.classList.add('btn-danger');
-            }
-
-            btn.textContent = status;
-        });
-    });
-
     function updateStatus(newStatus, accId) {
         $.ajax({
             url: "edit-customer.php",
