@@ -4,7 +4,7 @@ include 'functions.php';
 include 'modal_forms.php';
 
 // sa pagination ni na code
-$results_per_page = 6;
+$results_per_page = 5;
 // Retrieve total number of results from the database
 $sql = "SELECT COUNT(*) AS count FROM ProductTbl";
 $stmt = $conn->prepare($sql);
@@ -157,7 +157,7 @@ $query = "SELECT * FROM ProductTbl
                         </td>
                         <!-- Actions  -->
                         <td>
-                          <form method="POST" action="remove-product.php">
+                          <form method="POST" action="delete-product.php">
                             <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#edit-product-modal" data-id="<?php echo $row['prd_id'] ?>" data-name="<?php echo $row['prd_name'] ?>" data-price="<?php echo $row['prd_price'] ?>" data-unit="<?php echo $row['prd_unit'] ?>" data-cat="<?php echo $row['prd_cat'] ?>" data-img="<?php echo $row['prd_img'] ?>">Edit</button>
                             <input type="hidden" name="id" value="<?php echo $row['prd_id']; ?>">
                             <button type="submit" class="btn btn-sm btn-outline-danger delete-btn" data-confirm="Are you sure you want to delete this product?">Delete</button>

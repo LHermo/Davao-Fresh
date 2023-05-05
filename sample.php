@@ -1,238 +1,170 @@
 <?php
-session_start();
 include 'conn.php';
 include 'functions.php';
 
-$email = $_SESSION['email'];
-$acc_id = getDataBySession('acc_id', $conn, $email);
-$order_status = "Pending";
-$order_date = date("Y-m-d");
-$subtotal = 0;
+$ordId = $_POST['id'];
 
-if (isset($_POST['place_order'])) { //Kung na click na si button
-    try {
-        $cart = $_SESSION['cart'];
+$stmt = $conn->prepare("SELECT *
+FROM ProductTbl  
+JOIN OrderItemTbl ON ProductTbl.prd_id = OrderItemTbl.prd_id 
+JOIN OrderTbl ON OrderItemTbl.ord_id = OrderTbl.ord_id 
+JOIN accounttbl ON accounttbl.acc_id = ordertbl.acc_id
+WHERE OrderTbl.ord_id = :id");
 
-        // Sa OrderTbl
-        $total = $subtotal + 50;
-        $order_stmt = $conn->prepare("INSERT INTO OrderTbl (acc_id, ord_status, ord_totalprice, ord_dt) VALUES (?, ?, ?, ?)");
-        $order_stmt->execute([$acc_id, $order_status, $total, $order_date]);
-        $order_id = $conn->lastInsertId();
+$stmt->execute(["id" => $ordId]);
+$stmt->execute();
 
-        // Sa OrderItemTbl
-        $orditem_stmt = $conn->prepare("INSERT INTO OrderItemTbl (ord_id, prd_id, orditem_qty) VALUES (?, ?, ?)");
-        foreach ($cart as $productId => $quantity) {
-            $orditem_stmt->execute([$order_id, $productId, $quantity]);
-        }
+function getData($conn, $ordId, $column)
+{
+    $query = $conn->prepare("SELECT $column
+        FROM ProductTbl 
+        JOIN OrderItemTbl ON ProductTbl.prd_id = OrderItemTbl.prd_id 
+        JOIN OrderTbl ON OrderItemTbl.ord_id = OrderTbl.ord_id 
+        JOIN accounttbl ON accounttbl.acc_id = ordertbl.acc_id
+        WHERE OrderTbl.ord_id = :id");
 
-        $_SESSION['cart'] = array(); //I empty na ang cart
-        header("Location: products.php");
-        exit();
-    } catch (PDOException $e) {
-        echo "Ang error kayyyy: " . $e->getMessage();
-    }
+    $query->execute(["id" => $ordId]);
+    $query->execute();
+    $data = $query->fetchColumn();
+    echo $data;
 }
+function getSubTotal($conn, $ordId)
+{
+    $query = $conn->prepare("SELECT SUM(prd_price * orditem_qty)
+        FROM ProductTbl 
+        JOIN OrderItemTbl ON ProductTbl.prd_id = OrderItemTbl.prd_id 
+        JOIN OrderTbl ON OrderItemTbl.ord_id = OrderTbl.ord_id 
+        JOIN accounttbl ON accounttbl.acc_id = ordertbl.acc_id
+        WHERE OrderTbl.ord_id = :id");
 
-if (isset($_SESSION['cart']) && !empty($_SESSION['cart'])) {
-    $cart = $_SESSION['cart'];
-    foreach ($cart as $productId => $quantity) {
-        $stmt = $conn->prepare("SELECT * FROM ProductTbl WHERE prd_id = ?");
-        $stmt->execute([$productId]);
-        $row = $stmt->fetch();
-        $subtotal += $row['prd_price'] * $quantity;
-    } ?>
-    <!DOCTYPE html>
-    <html lang="en">
+    $query->execute(["id" => $ordId]);
+    $query->execute();
+    $data = $query->fetchColumn();
+    echo $data;
+}
+?>
+<!DOCTYPE html>
+<html lang="en">
 
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <!-- Required dependencies for Bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.3/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.2/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-        <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="assets/icon-green.svg">
+    <link rel="stylesheet" href="newstyle.css">
+    <title>Orders</title>
+</head>
 
-        <link rel="icon" href="assets/icon.ico">
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;700;900&display=swap" rel="stylesheet">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-        <title>Davao Fresh</title>
-    </head>
-    <style>
-        .material-symbols-outlined {
-            color: #E75644;
-        }
-
-        .plus-btn,
-        .minus-btn {
-            background-color: lightgray;
-        }
-
-        .plus-btn:hover,
-        .minus-btn:hover {
-            background-color: #1b1b1b;
-        }
-    </style>
-
-    <body>
-        <div class="main-content" style="margin-inline: 8%;">
-            <!-- NAVIGATION BAR -->
+<body class="bg-light min-height-100">
+    <div class="container-fluid">
+        <div class="row flex-nowrap">
+            <!-- Side bar code starts here -->
             <?php
-            include 'usr_navbar.php';
+            $active_tab = 'orders';
+            include 'adm_navbar.php';
             ?>
-
-            <!-- CONTENT -->
-            <div class="container-fluid mx-0" style="margin-top: 120px;">
-                <div class="row">
-                    <div class="col-md-6" style="width: 65%;">
-                        <div class="container p-4">
-                            <!-- Order Products diri -->
-                            <div class="row pb-4">
-                                <div class="col-md-12 fs-5 fw-bold">Shopping Basket</div>
-                            </div>
-                            <hr>
-                            <!-- Repeat stuff repeat stuff repeat stuff -->
-                            <?php foreach ($cart as $productId => $quantity) {
-                                $stmt = $conn->prepare("SELECT * FROM ProductTbl WHERE prd_id = ?");
-                                $stmt->execute([$productId]);
-                                $row = $stmt->fetch();
-                            ?>
-                                <div class="row my-2">
-                                    <table>
-                                        <tr>
-                                            <td class="ps-3" style="width: 65%;">
-                                                <div class="d-flex align-items-center">
-                                                    <img src="<?php echo $row['prd_img']; ?>" style="width: 55px; height: 45px; margin-right: 20px" />
-                                                    <div class="ms-3">
-                                                        <p class="fw-bold mb-1" style="font-weight: 500;"><?php echo $row['prd_name']; ?></p>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td style="width: 25%;"> <!-- Price + Unit of Measurement  -->
-                                                <p class="fw-bold mb-1" style="font-weight: 500;">₱<?php echo $row['prd_price']; ?>
-                                                    <span class=" mb-0 fw-normal">/ <?php echo $row['prd_unit'] ?></span>
-                                                </p>
-                                                <p class="text-muted mb-0 small">Qty: <?php echo $quantity; ?> <?php
-                                                                                                                if ($row['prd_unit'] == "per piece") {
-                                                                                                                    if ($quantity > 1) {
-                                                                                                                        echo 'pcs';
-                                                                                                                    } else {
-                                                                                                                        echo 'pc';
-                                                                                                                    }
-                                                                                                                } else if ($row['prd_unit'] == "per kilo") {
-                                                                                                                    if ($quantity > 1) {
-                                                                                                                        echo 'kgs';
-                                                                                                                    } else {
-                                                                                                                        echo 'kg';
-                                                                                                                    }
-                                                                                                                } else if ($row['prd_unit'] == "per gram") {
-                                                                                                                    if ($quantity > 1) {
-                                                                                                                        echo 'grams';
-                                                                                                                    } else {
-                                                                                                                        echo 'gram';
-                                                                                                                    }
-                                                                                                                } ?></p>
-                                            </td>
-
-                                            <td style="width: 10%;"> <!-- Actions  -->
-                                                <form method="POST" action="remove-product.php">
-                                                    <input type="hidden" name="id" value="<?php echo $row['prd_id']; ?>">
-                                                    <a href="https://example.com/delete" onclick="deleteItem()">
-                                                        <i class="material-icons" style="color: #E75644">delete_forever</i>
-                                                    </a>
-
-                                                </form>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </div>
-                                <hr>
-                            <?php } ?>
-                            <!-- End ni repeat stuff repeat stuff repeat stuff -->
-                        </div>
-                    </div>
-                    <div class="col-md-6" style="width: 35%;">
-                        <div class="container bg-light p-5 mx-0">
-                            <div class=" row">
-                                <!-- Receipt diri -->
-                                <div class="row fw-bold mb-4">
-                                    <div class="col-md-12">Order Summary</div>
-                                </div>
-                                <hr class="m-0">
-                                <div class="row py-3 px-0 m-0">
-                                    <?php foreach ($cart as $productId => $quantity) {
-                                        $stmt = $conn->prepare("SELECT * FROM ProductTbl WHERE prd_id = ?");
-                                        $stmt->execute([$productId]);
-                                        $row = $stmt->fetch(); ?>
-                                        <div class="row m-0">
-                                            <div class="col-md-8 m-0 px-0"><?php echo $row['prd_name']; ?></div>
-                                            <div class="col-md-4 m-0 px-0">₱<?php echo $row['prd_price']; ?>.00 × <?php echo $quantity ?></div>
-                                        </div>
-                                    <?php } ?>
-                                </div>
-                                <hr class="m-0">
-                                <div class="row pt-3">
-                                    <div class="col-md-6 fw-bold">Subtotal</div>
-                                    <div class="col-md-6"> ₱<?php echo $subtotal; ?>.00</div>
-                                </div>
-                                <div class="row py-3">
-                                    <div class="col-md-6 fw-bold">Delivery</div>
-                                    <div class="col-md-6">₱50.00</div>
-                                </div>
-                                <hr class="m-0">
-                                <div class="row mt-4">
-                                    <div class="col-md-6 fw-bold">Total</div>
-                                    <div class="col-md-6 fw-bold">₱<?php echo $total ?>.00</div>
-                                </div>
-                                <form method="POST" name="place_order" onclick="showSuccessMsg()">
-                                    <div class="row pt-5">
-                                        <div class="col-md-12">
-                                            <button type="submit" name="place_order" class="button-main bordered" style="padding: 10px; width: 100%;">Place Order</button>
+            <!-- Content na ni diri -->
+            <div class="col-6 p-4 my-5 ml-5 mr-2 bg-white rounded">
+                <h3>Order #<?php getData($conn, $ordId, 'OrderTbl.ord_id') ?></h3>
+                <hr>
+                <!-- Order table -->
+                <table class="table">
+                    <thead class="thead-light">
+                        <tr>
+                            <th scope="col">Qty</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Product</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php while ($row = $stmt->fetch()) : ?>
+                            <tr>
+                                <td><?php echo $row['orditem_qty']; ?></td>
+                                <th scope="row">
+                                    <p class="mb-1">₱ <?php echo $row['prd_price']; ?>.00</p>
+                                    <p class="text-muted mb-0 small"><?php echo $row['prd_unit']; ?></p>
+                                </th>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <img src="<?php echo $row['prd_img']; ?>" style="width: 55px; height: 45px; margin-right: 20px" />
+                                        <div class="ms-3">
+                                            <p class="fw-bold mb-1"><?php echo $row['prd_name']; ?></p>
+                                            <p class="text-muted mb-0 small"><?php echo $row['prd_cat']; ?></p>
                                         </div>
                                     </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
+                                </td>
+                            </tr>
+                        <?php endwhile; ?>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-3 my-5 ml-2 mr-5">
+                <div class="row p-4 bg-white rounded mb-3">
+                    <h6>Order #1</h6>
+                    <hr class="mb-5">
+                    <small class="text-muted">Placed on 2023-01-01</small>
+                    <dd class="col-sm-5">
+                        <p>Delivery fee:</p>
+                        <p>Subtotal</p>
+                        <p>Order Total</p>
+                    </dd>
+                    <dd class="col-sm-7">
+                        <p>₱ 50.00</p>
+                        <p>₱ <?php getSubtotal($conn, $ordId); ?>.00</p>
+                        <p>₱ <?php getData($conn, $ordId, 'ord_totalprice'); ?>.00</p>
+                    </dd>
+                    <select class="form-control" name="status" onchange="updateStatus(this.value, <?php echo $ordId; ?>)">
+                        <option disabled selected><?php getData($conn, $ordId, 'ord_status'); ?></option>
+                        <option value="Pending">Pending</option>
+                        <option value="On Process">On Process</option>
+                        <option value="Cancelled">Cancelled</option>
+                        <option value="Delivered">Delivered</option>
+                    </select>
+                </div>
+                <div class="row p-4 bg-white rounded">
+                    <h2 class="mb-4">Customer Details:</h2>
+                    <dd class="col-sm-3">
+                        <p><i class="material-icons text-black m-0">badge</i></p>
+                        <p><i class="material-icons text-black">pending</i></p>
+                        <p><i class="material-icons text-black">call</i></p>
+                        <p><i class="material-icons text-black">alternate_email</i></p>
+                        <p><i class="material-icons text-black">home</i></p>
+                        <p><i class="material-icons text-black">subtitles</i></p>
+                    </dd>
+                    <dd class="col-sm-9">
+                        <p>Name: <?php getData($conn, $ordId, 'acc_name'); ?></p>
+                        <p>Status: <?php getData($conn, $ordId, 'acc_status'); ?></p>
+                        <p>Phone: <?php getData($conn, $ordId, 'acc_phone'); ?></p>
+                        <p>Email: <?php getData($conn, $ordId, 'acc_email'); ?></p>
+                        <p>Address: <?php getData($conn, $ordId, 'acc_addr'); ?></p>
+                        <p>Zip: <?php getData($conn, $ordId, 'acc_zip'); ?></p>
+                    </dd>
                 </div>
             </div>
         </div>
-    </body>
-
-    </html>
-<?php } else {
-    echo "<p>Your basket is empty</p>";
-} ?>
+    </div>
+</body>
 <script>
-    // navbar animations
-    window.addEventListener('scroll', function() {
-        var navbar = document.querySelector('nav');
-        if (window.pageYOffset > 0) {
-            navbar.classList.add('nav-shadow');
-        } else {
-            navbar.classList.remove('nav-shadow');
-        }
-    });
-
-    window.onscroll = function() {
-        scrollFunction()
-    };
-
-    function scrollFunction() {
-        if (document.body.scrollTop > 60 || document.documentElement.scrollTop > 60) {
-            document.querySelector("nav").style.padding = "1% 10%";
-            document.querySelector("nav").style.height = "50px";
-            document.querySelector("nav").style.transition = "all 0.3s ease-in-out";
-        } else {
-            document.querySelector("nav").style.padding = "2% 10%";
-            document.querySelector("nav").style.height = "60px";
-            document.querySelector("nav").style.transition = "all 0.3s ease-in-out";
-        }
-    }
-
-    function showSuccessMsg() {
-        alert("You have placed an order successfully!");
+    function updateStatus(newStatus, ordId) {
+        // Make an AJAX request to update the account status in the database
+        $.ajax({
+            url: "edit-order.php",
+            method: "POST",
+            data: {
+                status: newStatus,
+                id: ordId
+            },
+            success: function(response) {
+                location.reload();
+            },
+            error: function(xhr, status, error) {
+                alert("Error updating account status: " + error);
+            }
+        });
     }
 </script>
