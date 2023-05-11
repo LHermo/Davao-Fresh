@@ -24,6 +24,10 @@ if (isset($_GET['delete'])) {
     exit();
 }
 
+function resetCart()
+{
+    $_SESSION['cart'] = array();
+}
 // adding sa cart
 if (isset($_SESSION['cart']) && !empty($_SESSION['cart'])) {
     $cart = $_SESSION['cart'];
@@ -52,7 +56,9 @@ if (isset($_SESSION['cart']) && !empty($_SESSION['cart'])) {
             }
 
             $_SESSION['cart'] = array(); //I empty na ang cart
-            header("Location: products.php");
+            echo "<script> alert('You have placed an order successfully!')</script>";
+            // header("Location: products.php");
+            echo "<script> location.href='thankyou.php'</script>";
             exit();
         } catch (PDOException $e) {
             echo "Ang error kayyyy: " . $e->getMessage();
@@ -108,8 +114,11 @@ if (isset($_SESSION['cart']) && !empty($_SESSION['cart'])) {
                         <div class="container p-4">
                             <!-- Order Products diri -->
                             <div class="row pb-4">
-                                <div class="col-md-8 fs-5 fw-bold">Shopping Basket</div>
-                                <div class="col-md-4 fs-5 fw-bold p-0 text-end"><button class="btn rounded-pill btn-outline-dark ps-3" onclick="location.href='products.php'">← Add more to cart</button></div>
+                                <div class="col-md-4 fs-5 fw-bold">Shopping Basket</div>
+                                <div class="col-md-8  d-flex justify-content-end ">
+                                    <button class="btn rounded-pill btn-outline-danger ms-3" onclick="emptyCart()">Reset cart</button>
+                                    <button class="btn rounded-pill btn-outline-dark ms-3" onclick="location.href='products.php'">← Add more to cart</button>
+                                </div>
                             </div>
                             <hr style=" border: 1px solid lightgray">
                             <!-- Repeat stuff repeat stuff repeat stuff -->
@@ -139,9 +148,9 @@ if (isset($_SESSION['cart']) && !empty($_SESSION['cart'])) {
                                             </td>
                                             <td>
                                                 <div class="quantity-selector" style="margin: auto; padding-right: 30px;">
-                                                    <button class="plus-btn" onclick="decrement(<?php echo $row['prd_id'] ?>)">-</button>
+                                                    <button class="plus-btn" onclick="decrementBasket(<?php echo $row['prd_id'] ?>)">-</button>
                                                     <input class="quantity-input" type="number" id="quantity-input-<?php echo $row['prd_id'] ?>" min="0" value=<?php echo $quantity ?>>
-                                                    <button class="minus-btn" onclick="increment(<?php echo $row['prd_id'] ?>)">+</button>
+                                                    <button class="minus-btn" onclick="incrementBasket(<?php echo $row['prd_id'] ?>)">+</button>
                                                 </div>
                                             </td>
                                             <td style="width: 10%;"> <!-- Actions  -->
@@ -190,7 +199,7 @@ if (isset($_SESSION['cart']) && !empty($_SESSION['cart'])) {
                                     <div class="col-md-8 fw-bold">Total</div>
                                     <div class="col-md-4 fw-bold">₱<?php echo $total ?>.00</div>
                                 </div>
-                                <form method="POST" name="place_order" onclick="showSuccessMsg()">
+                                <form method="POST" name="place_order" onsubmit="return confirmOrder()">
                                     <div class="row pt-5">
                                         <div class="col-md-12">
                                             <button type="submit" name="place_order" class="button-main bordered" style="padding: 10px; width: 100%;">Place Order</button>
@@ -265,7 +274,52 @@ if (isset($_SESSION['cart']) && !empty($_SESSION['cart'])) {
         }
     }
 
-    function showSuccessMsg() {
-        alert("You have placed an order successfully!");
+    document.getElementById("quantity-input-<?php echo $row['prd_id'] ?>").addEventListener("change", function(event) {
+        var newQuantity = parseInt(event.target.value);
+        updateQuantity(<?php echo $row['prd_id'] ?>, newQuantity);
+    });
+
+    function incrementBasket(productId) {
+        var quantityInput = document.getElementById("quantity-input-" + productId);
+        var newQuantity = parseInt(quantityInput.value) + 1;
+        quantityInput.value = newQuantity;
+        updateQuantity(productId, newQuantity);
+    }
+
+    function decrementBasket(productId) {
+        var quantityInput = document.getElementById("quantity-input-" + productId);
+        var newQuantity = parseInt(quantityInput.value) - 1;
+        if (newQuantity < 0) {
+            newQuantity = 0;
+        }
+        quantityInput.value = newQuantity;
+        updateQuantity(productId, newQuantity);
+    }
+
+    function updateQuantity(productId, newQuantity) {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                // Update the cart in the UI with the new quantity
+            }
+        };
+        xhttp.open("POST", "update-cart.php", true);
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhttp.send("productId=" + productId + "&quantity=" + newQuantity);
+        location.reload();
+    }
+
+    function emptyCart() {
+        if (confirm('Are you sure you want to empty your basket?')) {
+            location.href = 'empty-cart.php';
+        }
+    }
+
+    function confirmOrder() {
+        if (confirm("Are you sure you want to place this order?")) {
+            return true; // proceed with form submission
+        } else {
+            return false; // cancel form submission
+        }
     }
 </script>

@@ -74,64 +74,43 @@ $data = $stmt->fetchColumn();
                     <?php detailRow("City", getUserInfo($conn, $accID, 'acc_city')); ?>
                     <?php detailRow("ZIP", getUserInfo($conn, $accID, 'acc_zip')); ?>
                 </div>
-                <!-- Right panel -->
-                <!-- <div class="col-8 p-4">
-                    <h4>Edit Details <button type="submit" class="btn btn-primary" style="float: right;">Save Changes</button></h4>
-                    <hr class="mb-5">
-                    <form>
 
-                        <div class="mb-3">
-                            <label for="name" class="form-label">Name</label>
-                            <input type="name" class="form-control" id="name" value="name@example.com">
-                        </div>
-                        <div class="mb-3">
-                            <label for="email" class="form-label">Email</label>
-                            <input type="email" class="form-control" id="email" value="name@example.com">
-                        </div>
-                        <div class="mb-3">
-                            <label for="phone" class="form-label">Phone</label>
-                            <input type="phone" class="form-control" id="phone" value="name@example.com">
-                        </div>
-                        <div class="mb-3">
-                            <label for="addr" class="form-label">Address</label>
-                            <input type="addr" class="form-control" id="addr" value="name@example.com">
-                        </div>
-                        <div class="mb-3">
-                            <label for="city" class="form-label">City</label>
-                            <input type="city" class="form-control" id="city" value="name@example.com">
-                        </div>
-                        <div class="mb-3">
-                            <label for="zip" class="form-label">Zip</label>
-                            <input type="zip" class="form-control" id="zip" value="name@example.com">
-                        </div>
-                    </form>
-                </div> -->
+                <!-- Right panel -->
                 <div class="col-8 p-4">
                     <h4>Order History</h4>
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Date</th>
-                                <th scope="col">Status</th>
-                                <th scope="col">Total</th>
-                                <th scope="col">Items</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php while ($row = $stmt->fetch()) : ?>
-                                <tr>
-                                    <th scope="row"><?php echo $row['ord_ID'] ?></th>
-                                    <td><?php echo $row['ord_dt'] ?></td>
-                                    <td><?php echo $row['ord_status'] ?></td>
-                                    <td><?php echo $row['ord_totalprice'] ?></td>
-                                    <td colspan="2">@items</td>
-                                </tr>
-                            <?php endwhile ?>
-                        </tbody>
-                    </table>
+                    <hr class="mb-5">
+                    <?php
+                    $stmt = $conn->prepare("SELECT * FROM OrderTbl WHERE acc_id=:accID");
+                    $stmt->bindParam(':accID', $accID);
+                    $stmt->execute();
+                    $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+                    if (count($orders) > 0) {
+                        echo '<table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Order ID</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Total</th>
+                    </tr>
+                </thead>
+                <tbody>';
+                        foreach ($orders as $order) {
+                            echo '<tr>
+                    <td>' . $order['ord_id'] . '</td>
+                    <td>' . $order['ord_dt'] . '</td>
+                    <td>' . $order['ord_status'] . '</td>
+                    <td>' . $order['ord_totalprice'] . '</td>
+                  </tr>';
+                        }
+                        echo '</tbody></table>';
+                    } else {
+                        echo '<p>No orders found.</p>';
+                    }
+                    ?>
                 </div>
+
 
             </div>
         </div>

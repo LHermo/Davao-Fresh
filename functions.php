@@ -125,6 +125,7 @@ function getData($conn, $ordId, $column)
         var isLoggedIn = <?php echo isset($_SESSION['email']) && $_SESSION['email'] ? 'true' : 'false'; ?>;
         if (!isLoggedIn) {
             alert("Please log in to add products to your cart.");
+            location.href = "login.php";
             return;
         }
 
