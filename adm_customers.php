@@ -199,6 +199,7 @@ $query = "SELECT * FROM AccountTbl
                 id: accId
             },
             success: function(response) {
+                alert("Status updated successfully!");
                 location.reload();
             },
             error: function(xhr, status, error) {

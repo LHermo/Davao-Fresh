@@ -137,6 +137,13 @@ if (isset($_SESSION['cart']) && !empty($_SESSION['cart'])) {
                                                 </p>
 
                                             </td>
+                                            <td>
+                                                <div class="quantity-selector" style="margin: auto; padding-right: 30px;">
+                                                    <button class="plus-btn" onclick="decrement(<?php echo $row['prd_id'] ?>)">-</button>
+                                                    <input class="quantity-input" type="number" id="quantity-input-<?php echo $row['prd_id'] ?>" min="0" value=<?php echo $quantity ?>>
+                                                    <button class="minus-btn" onclick="increment(<?php echo $row['prd_id'] ?>)">+</button>
+                                                </div>
+                                            </td>
                                             <td style="width: 10%;"> <!-- Actions  -->
                                                 <a href="basket.php?delete=<?php echo $productId; ?>">
                                                     <i class="material-icons" style="color: #E75644">delete_forever</i>

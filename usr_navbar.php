@@ -42,8 +42,7 @@
                 echo $name;
                 ?></option>
             <option value="basket">My Basket</option>
-            <option value="history">Order History</option>
-            <option value="settings">Settings</option>
+            <option value="profile">Profile</option>
             <option value="logout">Logout</option>
         </select>
     <?php else : ?>
@@ -62,6 +61,8 @@
             window.location.href = 'logout.php';
         } else if (selectedValue === 'basket') {
             window.location.href = 'basket.php';
+        } else if (selectedValue === 'profile') {
+            window.location.href = 'profile.php';
         }
     });
 </script>

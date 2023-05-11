@@ -102,6 +102,20 @@ function getCatalog($conn, $category)
 
     echo '</div>';
 }
+function getData($conn, $ordId, $column)
+{
+    $query = $conn->prepare("SELECT $column
+        FROM ProductTbl 
+        JOIN OrderItemTbl ON ProductTbl.prd_id = OrderItemTbl.prd_id 
+        JOIN OrderTbl ON OrderItemTbl.ord_id = OrderTbl.ord_id 
+        JOIN accounttbl ON accounttbl.acc_id = ordertbl.acc_id
+        WHERE OrderTbl.ord_id = :id");
+
+    $query->execute(["id" => $ordId]);
+    $query->execute();
+    $data = $query->fetchColumn();
+    echo $data;
+}
 ?>
 <script>
     function addToCart(productId) {
@@ -111,6 +125,12 @@ function getCatalog($conn, $category)
         var isLoggedIn = <?php echo isset($_SESSION['email']) && $_SESSION['email'] ? 'true' : 'false'; ?>;
         if (!isLoggedIn) {
             alert("Please log in to add products to your cart.");
+            return;
+        }
+
+        // Check if 0 ang quantity
+        if (quantity == 0) {
+            alert("Please specify the product quantity.");
             return;
         }
 

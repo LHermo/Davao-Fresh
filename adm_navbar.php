@@ -1,3 +1,7 @@
+<?php
+
+
+?>
 <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0" style="background: #214D34; min-height: 832px;">
     <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
 
@@ -27,8 +31,11 @@
         <!-- Si Logout -->
         <ul class="nav nav=pills flex-column w-100">
             <li class="text-align-middle change-when-hovered">
-                <a href="logout.php" class="nav-link px-2 d-flex align-items-center">
-                    <i class="material-icons text-white">logout</i><span class="ms-1 d-none d-sm-inline text-white" style="padding-left: 10px;">Logout</span>
+                <a href="logout.php" class="nav-link px-2 d-flex">
+                    <i class="material-icons text-white">logout</i><span class="ms-1 d-none d-sm-inline text-white" style="padding-left: 10px;">Sign Out<?php if (!isset($_SESSION['email'])) : ?> <?php else : ?><p class="small">as <?php $email = $_SESSION['email'];
+                                                                                                                                                                                                                                        $name = getDataBySession('acc_name', $conn, $email);
+                                                                                                                                                                                                                                        echo $name;
+                                                                                                                                                                                                                                        ?></p><?php endif; ?></span>
                 </a>
             </li>
             </li>

@@ -329,10 +329,10 @@ footer a {
     display: block;
 }
 
-input {
+/* input {
     background: url("assets/search-icon.svg") right no-repeat;
     background-position: 733px 12px;
-}
+} */
 
 .categ {
     margin: 45px 8%;

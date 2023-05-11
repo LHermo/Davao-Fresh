@@ -6,7 +6,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST["email"];
     $password = $_POST["password"];
 
-    // Query the database to check if the email and password match an account
     $sql = "SELECT * FROM AccountTbl WHERE acc_email=:email AND acc_pwd=:password";
     $stmt = $conn->prepare($sql);
     $stmt->execute(array(
@@ -15,22 +14,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     ));
     $result = $stmt->fetch();
 
-    // If the query returns a row, the account exists and the login is successful
     if ($result) {
-        // Store the email and role in the session for future use
         $_SESSION["email"] = $email;
         $_SESSION["role"] = $result["acc_role"];
+        $_SESSION["status"] = $result["acc_status"];
 
-        // Redirect the user based on their role
-        if ($result["acc_role"] == "admin") {
-            header("Location: adm_customers.php");
-            exit();
-        } elseif ($result["acc_role"] == "customer") {
-            header("Location: home.php");
-            exit();
+        if ($result["acc_status"] == "active") {
+            if ($result["acc_role"] == "admin") {
+                header("Location: adm_orders.php");
+                exit();
+            } elseif ($result["acc_role"] == "customer") {
+                header("Location: home.php");
+                exit();
+            }
+        } else {
+            echo '<script>alert("Your account is temporarily deactivated. Please contact the administrator.")</script>';
         }
     } else {
-        // If the query returns zero rows, the account does not exist
         echo "<script>alert('Account does not exist.')</script>";
     }
 }

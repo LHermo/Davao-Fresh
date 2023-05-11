@@ -24,8 +24,6 @@ if (isset($_POST['add_to_basket'])) {
     $_SESSION['basket'][$product_id] = $quantity;
 }
 ?>
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -78,7 +76,7 @@ if (isset($_POST['add_to_basket'])) {
                         echo '<div class="cards-row">';
                     }
             ?>
-                    <div class="product-card" style="margin-top: 18px;  ">
+                    <div class="product-card" style="margin-top: 18px;">
                         <div class="product-card-content">
                             <div class="price">
                                 <span class="cost">₱ <?php echo $row['prd_price'] ?>.00<span>

@@ -3,30 +3,80 @@ session_start();
 include 'conn.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $name = $_POST["name"];
     $email = $_POST["email"];
-    $address = $_POST["address"];
-    $city = $_POST["city"];
-    $zip = $_POST["zip"];
-    $phone = $_POST["phone"];
     $password = $_POST["password"];
-    $confirmpass = $_POST["confirm-pass"];
+
+    //checker if ga exist daan account
+    $sql = "SELECT * FROM AccountTbl WHERE acc_email=:email";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute(array(
+        ':email' => $email
+    ));
+    $result = $stmt->fetch();
+
+    // if ga exist
+    if ($result) {
+        echo '<script>function showAccExists() {
+        alert("An account with this email already exists. Log in instead!");
+        window.location.href = "signUp.php";
+    }  
+    showAccExists();
+    </script>';
+    } else {
+        $_SESSION["email"] = $email;
+        $_SESSION["role"] = "customer";
+
+        $name = $_POST["name"];
+        $email = $_POST["email"];
+        $address = $_POST["address"];
+        $city = $_POST["city"];
+        $zip = $_POST["zip"];
+        $phone = $_POST["phone"];
+        $password = $_POST["password"];
+        $confirmpass = $_POST["confirm-pass"];
 
 
-    $stmt = $conn->prepare("INSERT INTO AccountTbl (acc_name, acc_email, acc_pwd, acc_addr, acc_city, acc_zip, acc_phone, acc_role, acc_status) VALUES (:name, :email, :password, :address, :city, :zip, :phone, 'customer','active')");
-    $stmt->bindParam(":name", $name);
-    $stmt->bindParam(":email", $email);
-    $stmt->bindParam(":address", $address);
-    $stmt->bindParam(":city", $city);
-    $stmt->bindParam(":zip", $zip);
-    $stmt->bindParam(":phone", $phone);
-    $stmt->bindParam(":password", $password);
+        $stmt = $conn->prepare("INSERT INTO AccountTbl (acc_name, acc_email, acc_pwd, acc_addr, acc_city, acc_zip, acc_phone, acc_role, acc_status) VALUES (:name, :email, :password, :address, :city, :zip, :phone, 'customer','active')");
+        $stmt->bindParam(":name", $name);
+        $stmt->bindParam(":email", $email);
+        $stmt->bindParam(":address", $address);
+        $stmt->bindParam(":city", $city);
+        $stmt->bindParam(":zip", $zip);
+        $stmt->bindParam(":phone", $phone);
+        $stmt->bindParam(":password", $password);
 
-    $stmt->execute();
+        $stmt->execute();
 
-    $_SESSION['name'] = $name;
-    header("Location: home.php");
-    exit;
+        // $_SESSION['name'] = $name;
+        echo "<script>alert('You have been successfully registered.');</script>";
+        echo '<script>window.location.href = "home.php";</script>';
+        exit;
+    }
+
+    // $name = $_POST["name"];
+    // $email = $_POST["email"];
+    // $address = $_POST["address"];
+    // $city = $_POST["city"];
+    // $zip = $_POST["zip"];
+    // $phone = $_POST["phone"];
+    // $password = $_POST["password"];
+    // $confirmpass = $_POST["confirm-pass"];
+
+
+    // $stmt = $conn->prepare("INSERT INTO AccountTbl (acc_name, acc_email, acc_pwd, acc_addr, acc_city, acc_zip, acc_phone, acc_role, acc_status) VALUES (:name, :email, :password, :address, :city, :zip, :phone, 'customer','active')");
+    // $stmt->bindParam(":name", $name);
+    // $stmt->bindParam(":email", $email);
+    // $stmt->bindParam(":address", $address);
+    // $stmt->bindParam(":city", $city);
+    // $stmt->bindParam(":zip", $zip);
+    // $stmt->bindParam(":phone", $phone);
+    // $stmt->bindParam(":password", $password);
+
+    // $stmt->execute();
+
+    // $_SESSION['name'] = $name;
+    // header("Location: home.php");
+    // exit;
 }
 ?>
 <!DOCTYPE html>

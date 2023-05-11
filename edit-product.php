@@ -22,16 +22,27 @@ $stmt->bindParam(':img', $img);
 $stmt->bindParam(':id', $id);
 
 // Execute the query
+// if ($stmt->execute()) {
+//     // Query executed successfully
+//     echo '<script>alert("Product updated successfully!")</script>';
+//     header('Location: adm_products.php');
+//     exit;
+// } else {
+//     // Query failed to execute
+//     // Display an error message
+//     echo 'Failed to update product data.';
+// }
 if ($stmt->execute()) {
     // Query executed successfully
-    // echo '<script>$("#success-modal").modal("show");</script>';
-    header('Location: adm_products.php');
+    echo '<script>alert("Product updated successfully!")</script>';
+    echo '<script>window.location.href = "adm_products.php";</script>';
     exit;
 } else {
     // Query failed to execute
     // Display an error message
     echo 'Failed to update product data.';
 }
+
 ?>
 
 <script>

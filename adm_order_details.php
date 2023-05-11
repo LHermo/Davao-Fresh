@@ -14,20 +14,20 @@ WHERE OrderTbl.ord_id = :id");
 $stmt->execute(["id" => $ordId]);
 $stmt->execute();
 
-function getData($conn, $ordId, $column)
-{
-    $query = $conn->prepare("SELECT $column
-        FROM ProductTbl 
-        JOIN OrderItemTbl ON ProductTbl.prd_id = OrderItemTbl.prd_id 
-        JOIN OrderTbl ON OrderItemTbl.ord_id = OrderTbl.ord_id 
-        JOIN accounttbl ON accounttbl.acc_id = ordertbl.acc_id
-        WHERE OrderTbl.ord_id = :id");
+// function getData($conn, $ordId, $column)
+// {
+//     $query = $conn->prepare("SELECT $column
+//         FROM ProductTbl 
+//         JOIN OrderItemTbl ON ProductTbl.prd_id = OrderItemTbl.prd_id 
+//         JOIN OrderTbl ON OrderItemTbl.ord_id = OrderTbl.ord_id 
+//         JOIN accounttbl ON accounttbl.acc_id = ordertbl.acc_id
+//         WHERE OrderTbl.ord_id = :id");
 
-    $query->execute(["id" => $ordId]);
-    $query->execute();
-    $data = $query->fetchColumn();
-    echo $data;
-}
+//     $query->execute(["id" => $ordId]);
+//     $query->execute();
+//     $data = $query->fetchColumn();
+//     echo $data;
+// }
 function getSubTotal($conn, $ordId)
 {
     $query = $conn->prepare("SELECT SUM(prd_price * orditem_qty)
@@ -71,7 +71,7 @@ function getSubTotal($conn, $ordId)
             <!-- Content na ni diri -->
             <div class="col-6 p-4 my-5 ml-5 mr-2 bg-white rounded">
 
-                <h3>Order #<?php getData($conn, $ordId, 'OrderTbl.ord_id') ?> <button type="button" class="btn btn-outline-secondary" onclick="goBack()" style="float: right;">Back to Orders</button>
+                <h3>Order #<?php getData($conn, $ordId, 'OrderTbl.ord_id') ?> <button type="button" class="btn btn-outline-secondary" onclick="location.href='adm_orders.php'" style="float: right;">Back to Orders</button>
                 </h3>
                 <hr>
                 <!-- Order table -->
@@ -80,6 +80,7 @@ function getSubTotal($conn, $ordId)
                         <tr>
                             <th scope="col">Qty</th>
                             <th scope="col">Price</th>
+                            <th scope="col">Total</th>
                             <th scope="col">Product</th>
                         </tr>
                     </thead>
@@ -87,9 +88,12 @@ function getSubTotal($conn, $ordId)
                         <?php while ($row = $stmt->fetch()) : ?>
                             <tr>
                                 <td><?php echo $row['orditem_qty']; ?></td>
-                                <th scope="row">
+                                <td>
                                     <p class="mb-1">₱ <?php echo $row['prd_price']; ?>.00</p>
                                     <p class="text-muted mb-0 small"><?php echo $row['prd_unit']; ?></p>
+                                </td>
+                                <th scope="row">
+                                    ₱ <?php echo ($row['orditem_qty'] * $row['prd_price']); ?>.00
                                 </th>
                                 <td>
                                     <div class="d-flex align-items-center">
@@ -107,9 +111,9 @@ function getSubTotal($conn, $ordId)
             </div>
             <div class="col-3 my-5 ml-2 mr-5">
                 <div class="row p-4 bg-white rounded mb-3">
-                    <h6>Order #1</h6>
+                    <h6>Order #<?php getData($conn, $ordId, 'OrderTbl.ord_id'); ?></h6>
                     <hr class="mb-5">
-                    <small class="text-muted">Placed on 2023-01-01</small>
+                    <small class="text-muted">Placed on <?php getData($conn, $ordId, 'OrderTbl.ord_dt'); ?></small>
                     <dd class="col-sm-5">
                         <p>Delivery fee:</p>
                         <p>Subtotal</p>
@@ -161,15 +165,12 @@ function getSubTotal($conn, $ordId)
                 id: ordId
             },
             success: function(response) {
+                alert("Order status updated successfully!")
                 location.reload();
             },
             error: function(xhr, status, error) {
                 alert("Error updating account status: " + error);
             }
         });
-    }
-
-    function goBack() {
-        window.history.back();
     }
 </script>

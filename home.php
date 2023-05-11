@@ -1,16 +1,17 @@
 <?php
 session_start();
 require_once('conn.php');
+include 'functions.php';
 
-function getDataBySession($column, $conn, $sessionVar)
-{
-    $sessionVar = $_SESSION['email'];
-    $stmt = $conn->prepare("SELECT $column FROM AccountTbl WHERE acc_email=:email");
-    $stmt->bindParam(':email', $sessionVar);
-    $stmt->execute();
-    $data = $stmt->fetchColumn();
-    echo $data;
-}
+// function getDataBySession($column, $conn, $sessionVar)
+// {
+//     $sessionVar = $_SESSION['email'];
+//     $stmt = $conn->prepare("SELECT $column FROM AccountTbl WHERE acc_email=:email");
+//     $stmt->bindParam(':email', $sessionVar);
+//     $stmt->execute();
+//     $data = $stmt->fetchColumn();
+//     echo $data;
+// }
 // pagkuha sa iD ni user ra ni
 ?>
 <!DOCTYPE html>
@@ -52,7 +53,13 @@ function getDataBySession($column, $conn, $sessionVar)
                 </div>
                 <div>
                     <button class="button-main spaced colored" onclick="location.href='products.php'"> Start Shopping</button>
-                    <button class="button-main bordered" onclick="location.href='signUp.php'">Sign Up</button>
+                    <?php
+                    if (isset($_SESSION['email'])) {
+                    } else { ?>
+                        <button class="button-main bordered" onclick="location.href='signUp.php'">Sign Up</button>
+                    <?php } ?>
+
+                    <!-- <button class="button-main bordered" onclick="location.href='signUp.php'">Sign Up</button> -->
                 </div>
             </div>
             <div class="panel right">
