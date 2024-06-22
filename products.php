@@ -3,7 +3,7 @@ session_start();
 include 'conn.php';
 include 'functions.php';
 
-// ADD TO BASKET CHECKER
+// ADD TO BASKET CHECKER 
 if (isset($_POST['add_to_basket'])) {
     $product_id = $_POST['product_id'];
     $quantity = $_POST['quantity'];
